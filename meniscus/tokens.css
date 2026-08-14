@@ -1,227 +1,315 @@
 /* ============================================================
-   MENISCUS — light collects at the edge
-   Direction D · dark · derived from meniscus-design-language.md v2.0
+   MENISCUS — Adivaa HydroMax design language, direction C
+   "Liquid morphism": the interface is water, not glass.
 
-   The whole language comes from one observation: water has surface
-   tension, so its edges are never sharp and never uniform. Light
-   collects on boundaries instead of filling surfaces.
+   ------------------------------------------------------------
+   WHY NOT GLASSMORPHISM
 
-   Why this and not glassmorphism: frosted blur destroys what is
-   behind it. Refraction preserves it. A water brand should bend
-   light, not fog it.
+   Glassmorphism is a frosted pane: blur, a hairline, a shadow.
+   Apple's Liquid Glass (2025) is the sophisticated version of the
+   same idea — a rigid meta-material that lenses light and always
+   reverts to its shape. Both are GLASS: hard, inert, and shaped
+   by their frame.
+
+   Water is not. Water has a surface. It has a meniscus where it
+   meets a wall. It has depth, and depth eats light — red first,
+   which is why deep water goes cyan then black. It responds to
+   disturbance and the disturbance travels. And when two bodies of
+   it come close enough, they merge.
+
+   For a bottle whose entire product is dissolved hydrogen, the
+   material is the product. That is the one case where this kind
+   of effect is earned rather than decorative.
+
+   ------------------------------------------------------------
+   THE FIVE RULES
+
+   1. Every surface is liquid held in a container.
+      It gets a MENISCUS — a curved, light-catching rim — never a
+      1px border. Light pools at the top edge and throws a caustic
+      line at the bottom.
+
+   2. Depth grades the page.
+      Scrolling is descending. Bands get darker and cooler as you
+      go down, following how water actually absorbs light.
+
+   3. Disturbance propagates.
+      A press does not just highlight — it displaces, and the
+      displacement travels outward and decays. Nothing snaps.
+
+   4. Near things coalesce.
+      Surface tension: elements within ~20px merge into one body
+      and separate again as they part.
+
+   5. The product stands in water.
+      The hero is a real fluid simulation, not a picture of one.
+
+   ------------------------------------------------------------
+   WHAT THE BROWSER WILL AND WILL NOT DO  (measured, not assumed)
+
+   · backdrop-filter: url(#f) — PARSES BUT DOES NOTHING. CSS.supports
+     returns true and the computed value round-trips, but the
+     compositor ignores it and the backdrop renders undistorted.
+     So arbitrary page content behind a panel CANNOT be refracted.
+     Edge refraction here is therefore constructed from layered
+     inset shadows and a rim gradient, not from a real filter.
+   · filter: url(#f) — WORKS. Real displacement, but only of an
+     element's OWN pixels. Used where an element owns its content.
+   · feGaussianBlur + feColorMatrix "goo" — WORKS, and cheaply.
+     This is what rule 4 is built on.
+   · Canvas heightfield water: 1.21 ms/frame at 300x375 including
+     the refraction pass. 13.8x headroom at 60fps. Affordable.
    ============================================================ */
 
+/* Fonts load via <link> in the head, not @import — an @import chain
+   resolves serially and blocks first paint.
+
+   ⚠ Fontshare silently drops every family after the first when you combine
+   them in one request. ONE REQUEST PER FAMILY. */
+
 :root {
-  /* ---------- 1 · PALETTE — two temperatures, one hue ----------
-     A WARM charcoal ground under COOL surfaces. That temperature gap
-     is what makes the blue read as emitted light rather than as tint.
-     Do not neutralise the ground "for consistency" — the whole
-     material read collapses if you do. */
-  --ground:   #0D0B0A;   /* warm charcoal · page base only          */
-  --ink-800:  #0E1113;   /* cool surface                            */
-  --ink-700:  #141A1E;   /* raised                                  */
-  --ink-600:  #1C2429;   /* hairline                                */
+  /* ---------- 1. WATER — the ground the whole page sits in ----------
+     Sampled along a real absorption curve. Red goes first, then green,
+     which is why the deep end is cyan-black and never neutral-grey. */
+  --w-air:      #F4FBFD;   /* above the surface — aerated, near-white */
+  --w-surface:  #EAF5F9;   /* the first inch of water                 */
+  --w-shallow:  #DCEDF3;   /* light still reaches the bottom          */
+  --w-mid:      #12586E;   /* colour has started to go                */
+  --w-deep:     #062A38;   /* only blue-green left                    */
+  --w-abyss:    #03161E;   /* effectively black, with a blue cast     */
 
-  --brand-900:#063441;   /* deepest wash · wave troughs             */
-  --brand-800:#0A5870;   /* ambient light source                    */
-  --brand-600:#0E7897;   /* ★ BRAND · FILLS ONLY, never text (3.8:1)*/
-  --brand-500:#209FC5;   /* links · focus · small blue text (~7:1)  */
-  --brand-400:#55C5E7;   /* emphasis · glow · active · verified     */
-  --brand-300:#97E0F7;   /* specular crest · caustics · rare        */
+  /* ---------- 2. INK ---------- */
+  --ink-900: #06222C;
+  --ink-700: #133A47;
+  --ink-500: #3E6673;   /* 5.20:1 on --w-shallow */
+  --ink-300: #4A6B78;   /* 4.76:1 on --w-shallow — captions are small, so they get no discount */
+  --line:    #D3E6EC;
+  --line-strong: #B4D3DD;
 
-  --text-hi:  #F2F5F7;   /* primary type · plane 1                  */
-  --text-mid: #A6B2B9;   /* body · plane 2                          */
-  --text-low: #6B777E;   /* instrument label · plane 3              */
-  --alert-500:#E0543F;   /* errors only (~5.1:1)                    */
+  /* Ink for use on deep bands. Pure white is too hard against water —
+     these carry a trace of the surrounding hue so type sits IN the
+     medium rather than on top of it. */
+  --ink-on-deep:     #EAF7FA;
+  --ink-on-deep-2:   rgba(219, 241, 247, .88);  /* 5.9:1 on --w-mid */
+  --ink-on-deep-3:   rgba(219, 241, 247, .78);  /* 4.8:1 on --w-mid */
 
-  /* ---------- 2 · GRADIENTS — eight tokens, nothing is flat ----------
-     Every surface, edge, rule and fill resolves to one of these.
-     No gradient carries more than two stops of one hue plus alpha. */
+  /* ---------- 3. BRAND ---------- */
+  --blue-900: #05323F;
+  --blue-800: #0A4A5E;
+  --blue-700: #0A5C75;
+  --blue-600: #0E7897;   /* ★ BRAND */
+  --blue-400: #4BA6C0;
+  --blue-200: #A9D5E2;
+  --blue-50:  #EAF4F8;
+  /* #0E7897 is 4.2:1 on --w-shallow — fine for a headline at 3:1, short for
+     anything small. Small brand-coloured text uses this instead (6.23:1). */
+  --brand-ink: #0A5C75;
 
-  /* plane 1 fill — minimum 6% luminance delta top to bottom, lit from above */
-  --grad-surface: linear-gradient(180deg, rgba(255,255,255,.045) 0%, rgba(255,255,255,.015) 100%);
+  /* Aqua is the hydrogen. On deep bands it is the only thing that glows,
+     so it reads as the dissolved gas rather than as an accent colour. */
+  --aqua:      #00C8C0;
+  --aqua-lit:  #7DF5EF;   /* the lit edge of a bubble */
+  --aqua-soft: rgba(0, 200, 192, .14);
+  --aqua-ink:  #05605C;
+  --amber:     #FFB43D;
+  --amber-soft:rgba(255, 180, 61, .16);
+  --amber-ink: #7A5410;
 
-  /* THE SIGNATURE. Not a border colour — light landing on a rim,
-     brightest at top-centre, gone by the bottom corners. */
-  --grad-edge: radial-gradient(72% 128% at 50% 0%,
-                 rgba(255,255,255,.20) 0%, rgba(255,255,255,.055) 46%, rgba(255,255,255,0) 78%);
+  --positive: #0E6E56;  /* 5.16:1 on --w-shallow */
+  --negative: #C0392F;
 
-  /* the wet cue — sits INSIDE the rim and never fills the interior */
-  --grad-bloom: linear-gradient(to bottom, rgba(85,197,231,.085) 0, rgba(85,197,231,0) 6px);
+  /* ---------- 4. TYPE ---------- */
+  --font-display: 'General Sans', 'Avenir Next', system-ui, sans-serif;
+  --font-text:    'Satoshi', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-data:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-  /* every divider in the system — fades over the outer 15%, never
-     terminates abruptly */
-  --grad-rule: linear-gradient(90deg, transparent 0%, var(--ink-600) 15%, var(--ink-600) 85%, transparent 100%);
+  --t-d0: clamp(3.5rem, 10vw, 8.5rem);
+  --t-d1: clamp(3rem, 8.2vw, 6.75rem);
+  --t-d2: clamp(2.125rem, 4.6vw, 3.875rem);
+  --t-d3: clamp(1.625rem, 3vw, 2.5rem);
+  --t-h4: clamp(1.1875rem, 1.5vw, 1.375rem);
+  --t-lead: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  --t-body: 1rem;
+  --t-sm:   0.875rem;
+  --t-xs:   0.8125rem;
+  --t-label: 0.6875rem;
 
-  /* the single light source. ONE per view — a second glow flattens the first */
-  --grad-ambient: radial-gradient(46% 38% at 50% 42%, rgba(10,88,112,.34) 0%, rgba(10,88,112,0) 72%);
+  /* Tracking is a curve, not a value — negative through the display
+     sizes, crossing zero around 13px, positive below. */
+  --ls-d0:    -0.045em;
+  --ls-d1:    -0.038em;
+  --ls-d2:    -0.032em;
+  --ls-d3:    -0.026em;
+  --ls-h4:    -0.019em;
+  --ls-lead:  -0.013em;
+  --ls-body:  -0.008em;
+  --ls-sm:    -0.003em;
+  --ls-xs:     0.002em;
+  --ls-micro:  0.010em;
+  --ls-label:  0.14em;
 
-  /* the one place a saturated fill may occupy an interior */
-  --grad-fill: linear-gradient(180deg, var(--brand-500) 0%, var(--brand-600) 100%);
+  --lh-statement: 0.86;
+  --lh-tight: 0.92;
+  --lh-head:  1.02;
+  --lh-d3:    1.06;
+  --lh-h4:    1.18;
+  --lh-lead:  1.45;
+  --lh-body:  1.55;
+  --lh-sm:    1.6;
 
-  /* type over imagery, and the modal dim. Cubic-eased, never linear —
-     linear scrims band visibly on dark photography. */
-  --grad-scrim: linear-gradient(to top,
-                  rgba(13,11,10,.90) 0%, rgba(13,11,10,.74) 18%,
-                  rgba(13,11,10,.36) 46%, rgba(13,11,10,.08) 72%, rgba(13,11,10,0) 100%);
+  /* ---------- 5. SPACE ---------- */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 24px;  --s-6: 32px;  --s-7: 48px;  --s-8: 64px;
+  --s-9: 96px;  --s-10: 128px; --s-11: 160px;
 
-  /* scroll and overflow boundaries — content fades rather than being cut */
-  --grad-mask: linear-gradient(to bottom, #000 calc(100% - 48px), transparent 100%);
+  --section-y: clamp(104px, 12vw, 216px);
+  --gutter:    clamp(22px, 5vw, 72px);
+  --measure:   1160px;
+  --shell:     1400px;
 
-  /* ---------- 3 · NOISE ----------
-     2.5% grain over every gradient. Mandatory: it is the difference
-     between premium and CSS demo, and it is what kills banding on
-     large dark washes. Inline SVG so there is no asset to lose. */
-  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-  --noise-opacity: .025;
+  /* ---------- 6. RADIUS ----------
+     Liquid has no corners. Radii run large, and the signature
+     containers use an asymmetric radius so the silhouette reads as a
+     settled droplet rather than a rounded rectangle. */
+  --r-sm:   16px;
+  --r-md:   26px;
+  --r-lg:   38px;
+  --r-xl:   52px;
+  --r-drop: 52px 52px 46px 46px / 44px 44px 54px 54px;
+  --r-pill: 999px;
 
-  /* ---------- 4 · PLANES ----------
-     Hierarchy comes from moving between planes, never from changing
-     size or weight. Elevation is blur on what is BEHIND an element;
-     there are no drop shadows anywhere in this system. */
-  --p1-scale: 1;      --p1-opacity: 1;    --p1-sat: 1;    --p1-n: 4.2;
-  --p2-scale: .99;    --p2-opacity: .92;  --p2-sat: .85;  --p2-n: 3.4;
-  --p3-scale: .98;    --p3-opacity: .55;  --p3-sat: .65;  --p3-n: 5;
+  /* ---------- 7. MENISCUS ----------
+     The rim is the whole language. Four stacked pieces:
+       · a bright inner arc at the top    — light pooling at the edge
+       · a dark inner arc at the bottom   — the body of the liquid
+       · a thin caustic line at the base  — light focused through it
+       · a soft outer bleed               — wet contact with the page
+     Never replace this with a flat 1px border. */
+  --men-hi:      inset 0 1.5px 0 rgba(255,255,255,.85);
+  --men-hi-deep: inset 0 1.5px 0 rgba(190, 245, 255, .30);
+  --men-body:    inset 0 -14px 26px -18px rgba(6,34,44,.30);
+  --men-body-deep: inset 0 -18px 34px -20px rgba(0,0,0,.55);
+  --men-caustic: inset 0 -1.5px 0 rgba(0,200,192,.42);
+  --men-bleed:   0 18px 44px -26px rgba(6,42,56,.34);
+  --men-bleed-deep: 0 26px 60px -30px rgba(0,0,0,.6);
 
-  /* ---------- 5 · MATERIAL THICKNESS ----------
-     Thickness scales with size. With no shadows, thickness is blur
-     strength and rim strength — not depth of shadow. */
-  --mat-chip-blur:  12px;  --mat-chip-rim:  .10;
-  --mat-card-blur:  20px;  --mat-card-rim:  .16;
-  --mat-sheet-blur: 32px;  --mat-sheet-rim: .22;
+  /* Composed rims — apply one of these, not the parts. */
+  --meniscus:      var(--men-hi), var(--men-body), var(--men-caustic), var(--men-bleed);
+  --meniscus-deep: var(--men-hi-deep), var(--men-body-deep), var(--men-caustic), var(--men-bleed-deep);
 
-  /* refraction strength, in the SVG filter's displacement units.
-     Calibrated by eye: 1–2 is invisible, 8 mangles type. 4 is the
-     readable limit and lands the spec's "1–2px" of visible travel. */
-  --refract: 4;
+  /* Body of a liquid surface — a light blur, and a vertical brightness
+     ramp because the top of a body of water is always brighter. */
+  --liq-light: rgba(255,255,255,.58);
+  --liq-deep:  rgba(10, 58, 74, .42);
+  --liq-blur:  saturate(190%) blur(20px);
+  --liq-blur-lg: saturate(200%) blur(38px);
 
-  /* ---------- 6 · TYPE ----------
-     Satoshi for display and UI, Instrument Serif Italic as the single
-     accent. NO MONOSPACE ANYWHERE — the instrument label carries the
-     technical register instead. Strict 1.25 ladder, all in rem so the
-     layout scales with the user's text setting. */
-  --font-ui:     'Satoshi', system-ui, -apple-system, sans-serif;
-  --font-accent: 'Instrument Serif', Georgia, serif;
+  --focus-ring: 0 0 0 3px rgba(0,200,192,.45);
 
-  --t-display: 3.813rem;  /* 61.0px */
-  --t-figure:  3.050rem;  /* 48.8px · hero figure, tabular */
-  --t-h1:      2.438rem;  /* 39.0px */
-  --t-h2:      1.953rem;  /* 31.3px */
-  --t-h3:      1.563rem;  /* 25.0px */
-  --t-lead:    1.250rem;  /* 20.0px · lead + price */
-  --t-ui:      1rem;      /* 16.0px */
-  --t-caption: 0.800rem;  /* 12.8px */
-  --t-label:   0.688rem;  /* 11.0px · instrument label */
+  /* ---------- 8. MOTION ----------
+     Liquid does not settle like a spring-loaded panel. It overshoots,
+     comes back, and wobbles once more before it is still — so the
+     default carries a little more bounce than a UI spring would, and
+     the "settle" curve has a visible second crest.
 
-  /* tracking is size-specific; leading tracks size inversely.
-     One value across the ladder is wrong somewhere. */
-  --ls-display: -.03em;   --lh-display: 1.02;
-  --ls-figure:  -.03em;   --lh-figure:  1.05;
-  --ls-h1:      -.03em;   --lh-h1:      1.08;
-  --ls-h2:      -.02em;   --lh-h2:      1.15;
-  --ls-h3:      -.01em;   --lh-h3:      1.25;
-  --ls-lead:      0em;    --lh-lead:    1.40;
-  --ls-ui:        0em;    --lh-ui:      1.50;
-  --ls-caption:  .01em;   --lh-caption: 1.45;
-  --ls-label:    .14em;   --lh-label:   1.30;
+     Sampled from the same analytic spring the engine runs, so a CSS
+     transition and a JS spring describe identical physics. Regenerate
+     both together if the parameters ever change. */
+  --spring-ui:    linear(0, 0.0218 4.2%, 0.0754 8.3%, 0.1472 12.5%, 0.2275 16.7%, 0.3101 20.8%, 0.3908 25%, 0.467 29.2%, 0.5372 33.3%, 0.6007 37.5%, 0.6575 41.7%, 0.7075 45.8%, 0.7513 50%, 0.7894 54.2%, 0.8222 58.3%, 0.8503 62.5%, 0.8743 66.7%, 0.8947 70.8%, 0.912 75%, 0.9266 79.2%, 0.9389 83.3%, 0.9492 87.5%, 0.9579 91.7%, 0.9651 95.8%, 1);
+  --spring-bounce:linear(0, 0.034 4.2%, 0.1168 8.3%, 0.2255 12.5%, 0.3438 16.7%, 0.4608 20.8%, 0.5695 25%, 0.6661 29.2%, 0.7488 33.3%, 0.8174 37.5%, 0.8727 41.7%, 0.916 45.8%, 0.949 50%, 0.9732 54.2%, 0.9903 58.3%, 1.0019 62.5%, 1.0091 66.7%, 1.0132 70.8%, 1.0149 75%, 1.0151 79.2%, 1.0142 83.3%, 1.0128 87.5%, 1.0111 91.7%, 1.0093 95.8%, 1);
+  /* surface tension: damping 0.55 — a real second crest, which is what
+     separates "liquid" from "springy" to the eye */
+  --spring-liquid:linear(0, 0.0543 4.2%, 0.1839 8.3%, 0.3494 12.5%, 0.5222 16.7%, 0.6819 20.8%, 0.8163 25%, 0.9204 29.2%, 0.9942 33.3%, 1.0414 37.5%, 1.0663 41.7%, 1.0742 45.8%, 1.0702 50%, 1.0588 54.2%, 1.0435 58.3%, 1.0273 62.5%, 1.0122 66.7%, 0.9995 70.8%, 0.9897 75%, 0.9828 79.2%, 0.9787 83.3%, 0.977 87.5%, 0.9772 91.7%, 0.9789 95.8%, 1);
 
-  /* ---------- 7 · SPACE — 8px baseline, expressed in rem ---------- */
-  --s-1: .25rem; --s-2: .5rem;  --s-3: .75rem; --s-4: 1rem;
-  --s-5: 1.5rem; --s-6: 2rem;   --s-7: 3rem;   --s-8: 4rem;
-  --s-9: 6rem;   --s-10: 8rem;  --s-11: 10rem;
-
-  --section-y: clamp(6rem, 12vw, 13rem);
-  --gutter:    clamp(1.375rem, 5vw, 4.5rem);
-  --measure:   71rem;
-  --shell:     87.5rem;
-
-  /* ---------- 8 · EDGES ----------
-     Continuous curvature everywhere. `corner-shape` is the real
-     mechanism; the radius below is only the fallback where it is
-     unsupported, never a design value in its own right. */
-  --r-chip:  .875rem;
-  --r-card:  1.5rem;
-  --r-sheet: 2.25rem;
-  --r-pill:  999px;
-
-  /* ---------- 9 · MOTION ----------
-     Class A ambient (nothing you can grab) uses this curve.
-     Class B interactive is SPRINGS ONLY — see motion.js. The two are
-     never mixed; that is conflict #1 in the spec, already settled. */
-  --ease-ambient: cubic-bezier(.16, 1, .3, 1);
-  --dur-ambient: 560ms;
-  --stagger: 60ms;
-
-  /* sampled from the same analytic spring motion.js runs, so a CSS
-     transition and a JS spring describe identical physics */
-  --spring-ui:     linear(0, 0.0218 4.2%, 0.0754 8.3%, 0.1472 12.5%, 0.2275 16.7%, 0.3101 20.8%, 0.3908 25%, 0.467 29.2%, 0.5372 33.3%, 0.6007 37.5%, 0.6575 41.7%, 0.7075 45.8%, 0.7513 50%, 0.7894 54.2%, 0.8222 58.3%, 0.8503 62.5%, 0.8743 66.7%, 0.8947 70.8%, 0.912 75%, 0.9266 79.2%, 0.9389 83.3%, 0.9492 87.5%, 0.9579 91.7%, 0.9651 95.8%, 1);
   --dur-spring: 301ms;
-  --dur-press:  90ms;
+  --dur-move:   344ms;
+  --dur-bounce: 430ms;
+  --dur-liquid: 760ms;   /* damping 0.55, response 0.5 — full settle  */
+  --dur-press:  90ms;    /* feedback is on pointer-down, and instant  */
+  --dur-ripple: 1100ms;  /* how long a disturbance takes to die out   */
 
-  --focus-ring: 0 0 0 2px var(--brand-400);
-
-  /* ---------- 10 · COMPATIBILITY ALIASES ----------
-     The markup carries a few inline styles from the light build that
-     reference the old token names. Rather than hunt them through 18
-     sections of HTML, they are re-pointed at their Meniscus equivalents
-     here. Nothing new should use these. */
-  --aqua:         var(--brand-400);
-  --paper:        var(--ink-700);
-  --font-display: var(--font-ui);
-  --font-text:    var(--font-ui);
-  --font-data:    var(--font-ui);   /* no monospace in this system */
+  --ease-entrance: cubic-bezier(.22, 1, .36, 1);
+  --ease-ui:       cubic-bezier(.4, 0, .2, 1);
+  --ease-water:    cubic-bezier(.65, 0, .35, 1);
+  --dur-entrance: 700ms;
+  --dur-ui: 240ms;
+  --dur-water: 1200ms;
+  --stagger: 70ms;
 }
 
-/* OKLCH is the authoring space; the hex above is the fallback. Every
-   state colour is derived with color-mix() rather than hand-picked, so
-   hover and active can never drift out of the ramp. */
-@supports (color: oklch(0.5 0.1 200)) {
+/* ============================================================
+   DEPTH BANDS
+   Scrolling the page is descending through water. Each band sets
+   its own ground and its own ink, so contrast is decided per band
+   rather than hoped for globally.
+   ============================================================ */
+.z-air     { --ground: var(--w-air);     --ink: var(--ink-900); --depth: 0;   }
+.z-surface { --ground: var(--w-surface); --ink: var(--ink-900); --depth: .12; }
+.z-shallow { --ground: var(--w-shallow); --ink: var(--ink-900); --depth: .28; }
+.z-mid     { --ground: var(--w-mid);     --ink: var(--ink-on-deep); --depth: .62; }
+.z-deep    { --ground: var(--w-deep);    --ink: var(--ink-on-deep); --depth: .84; }
+.z-abyss   { --ground: var(--w-abyss);   --ink: var(--ink-on-deep); --depth: 1;   }
+
+/* ---------- accessibility ----------
+   Reduced transparency does not mean "delete the layer" — it means the
+   same layer, frosted solid, so hierarchy survives. */
+@media (prefers-reduced-transparency: reduce) {
   :root {
-    --ground:   oklch(0.146 0.004  60);
-    --ink-800:  oklch(0.176 0.006 220);
-    --ink-700:  oklch(0.218 0.010 233);
-    --ink-600:  oklch(0.272 0.013 233);
-    --brand-900:oklch(0.323 0.045 226);
-    --brand-800:oklch(0.452 0.072 227);
-    --brand-600:oklch(0.565 0.093 226);
-    --brand-500:oklch(0.686 0.108 228);
-    --brand-400:oklch(0.797 0.093 224);
-    --brand-300:oklch(0.886 0.061 210);
-    --text-hi:  oklch(0.966 0.004 220);
-    --text-mid: oklch(0.755 0.013 230);
-    --text-low: oklch(0.556 0.014 230);
-    --alert-500:oklch(0.634 0.171  33);
+    --liq-light: rgba(255,255,255,.98);
+    --liq-deep:  #0A3A4A;
+    --liq-blur: none; --liq-blur-lg: none;
+  }
+}
+@media (prefers-contrast: more) {
+  :root {
+    --liq-light: #fff;
+    --liq-deep:  #041E28;
+    --liq-blur: none; --liq-blur-lg: none;
+    --line: #6E93A0;
+    --line-strong: #47707D;
+    --ink-500: #24505E;
+    --ink-300: #3C6472;
+    --ink-on-deep-2: rgba(234,247,250,.94);
+    --ink-on-deep-3: rgba(234,247,250,.82);
+    /* a flat, high-contrast rim instead of a soft optical one */
+    --meniscus:      inset 0 0 0 1.5px rgba(6,34,44,.85);
+    --meniscus-deep: inset 0 0 0 1.5px rgba(234,247,250,.85);
   }
 }
 
 /* ============================================================
-   ACCESSIBILITY — three signals that OUTRANK the five laws
+   SHARED-COMPONENT BRIDGE
+   The layout, rails, accordion, bento, specs and marquee are shared
+   across all three directions, and they reference the paper-era
+   token names. Rather than fork that CSS, the names are re-pointed
+   at water here — so a shared component asking for "paper" gets the
+   surface of the water, and asking for a "card shadow" gets a
+   meniscus. One place to look when something reads wrong.
    ============================================================ */
+:root {
+  --blue-950:   var(--w-abyss);
+  --paper:      #F7FCFD;                 /* the lit surface film      */
+  --paper-tint: var(--w-surface);
+  --paper-blue: var(--w-shallow);
+  /* Sampled from hero-studio.jpg's own backdrop. The hero plate ratio
+     matches the render exactly, so this is only ever seen before the
+     image decodes — do not "improve" it to a brand tint. */
+  --plate:      #F5F5F5;
 
-/* Plane 1 glass goes solid. The plane model has to survive on
-   saturation and opacity alone. */
-@media (prefers-reduced-transparency: reduce) {
-  :root {
-    --mat-chip-blur: 0px; --mat-card-blur: 0px; --mat-sheet-blur: 0px;
-    --refract: 0;
-    --grad-bloom: none;
-  }
-}
+  --shadow-card:  var(--meniscus);
+  --shadow-lift:  var(--men-hi), 0 26px 56px -26px rgba(6,42,56,.5);
+  --shadow-glass: var(--meniscus);
+  --shadow-float: var(--men-hi), 0 34px 74px -32px rgba(6,42,56,.5);
 
-/* Laws 1 (nothing is flat) and 2 (nothing is sharp) are SUSPENDED.
-   Solid fills and solid contrasting borders are correct here. */
-@media (prefers-contrast: more) {
-  :root {
-    --grad-surface: linear-gradient(var(--ink-700), var(--ink-700));
-    --grad-edge:    linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.7));
-    --grad-bloom:   none;
-    --grad-rule:    linear-gradient(90deg, var(--text-low), var(--text-low));
-    --grad-ambient: none;
-    --noise-opacity: 0;
-    --refract: 0;
-    --mat-chip-blur: 0px; --mat-card-blur: 0px; --mat-sheet-blur: 0px;
-    /* text-mid is retired in favour of text-hi throughout */
-    --text-mid: #F2F5F7;
-    --text-low: #C6D0D6;
-  }
+  --mat-thin:      var(--liq-light);
+  --mat-regular:   rgba(255,255,255,.72);
+  --mat-thick:     rgba(255,255,255,.86);
+  --mat-deep:      var(--liq-deep);
+  --mat-edge:      rgba(255,255,255,.62);
+  --mat-hairline:  rgba(125,245,239,.34);
+  --mat-blur-sm:   saturate(190%) blur(12px);
+  --mat-blur-md:   var(--liq-blur);
+  --mat-blur-lg:   var(--liq-blur-lg);
+
+  --dur-sheet: 322ms;
 }

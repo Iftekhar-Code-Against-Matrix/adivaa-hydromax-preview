@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HydroMax 300 ml — Hydrogen Water Bottle | Adivaa</title>
 <meta name="description" content="Up to 9,000 PPB molecular hydrogen in 18 minutes. DuPont PEM + SPE electrolysis, drink · mist · inhale. ₹15,999 with 365-day replacement.">
-<meta name="theme-color" content="#0D0B0A">
+<meta name="theme-color" content="#0E7897">
 <meta property="og:type" content="product">
 <meta property="og:title" content="HydroMax 300 ml — Hydrogen Water Bottle | Adivaa">
 <meta property="og:description" content="Up to 9,000 PPB molecular hydrogen in 18 minutes. DuPont PEM + SPE electrolysis, drink · mist · inhale.">
@@ -14,17 +14,13 @@
 
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- One request per family — Fontshare drops every family after the first.
-     Meniscus is a TWO-FACE system: Satoshi carries everything, Instrument
-     Serif Italic is the single accent. No monospace anywhere — the
-     instrument label carries the technical register instead, which is why
-     JetBrains Mono is gone. Satoshi ships 400/500/700 (no 600), so the
-     ladder is a clean two-weight system: 500 medium, 700 display. -->
+<!-- One request per family — Fontshare drops every family after the first. -->
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="styles.css">
-<link rel="preload" as="image" href="assets/hero-render.webp" type="image/webp">
+<link rel="preload" as="image" href="assets/hero-studio.jpg">
 
 <script type="application/ld+json">
 {
@@ -41,28 +37,13 @@
 </head>
 <body>
 
-<!-- ══════════════ THE MATERIAL ══════════════
-     This is what separates Meniscus from glassmorphism. A frosted blur
-     DESTROYS what is behind a surface; a displacement map BENDS it, so
-     content passing under a panel stays readable while visibly moving
-     through a liquid boundary.
-
-     `scale` is the whole calibration. 1–2 is invisible, 8 mangles type;
-     4 lands the ~2px of visible travel the language calls for and is
-     the readable limit over body copy. Measured, not guessed.
-     Verified refracting the live backdrop in Chrome 148. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <filter id="mn-refract" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
-    <!-- anisotropic: fast horizontal ripple over slow vertical drift, so
-         it reads as water rather than as generic noise -->
-    <feTurbulence type="fractalNoise" baseFrequency="0.011 0.03" numOctaves="2" seed="4" result="n"/>
-    <feGaussianBlur in="n" stdDeviation="1.4" result="ns"/>
-    <feDisplacementMap in="SourceGraphic" in2="ns" scale="4" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-</defs></svg>
-
 <!-- ===== ICONS ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<!-- Rule 4, coalescence. Blur smears two shapes into one field, then the
+     steep alpha ramp in the colour matrix re-sharpens everything above a
+     threshold — so overlapping blobs fuse with a real neck between them
+     instead of just crossfading. -->
+<filter id="lq-goo"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="g"/><feBlend in="SourceGraphic" in2="g"/></filter>
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.3 6 10.3A6 6 0 0 1 6 13.3C6 9.3 12 3 12 3Z"/></symbol>
 <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></symbol>
@@ -123,16 +104,16 @@
      One idea per screen. The hero states what it is and what it costs;
      everything you configure lives in §01b, which does that job properly
      with a running order summary. -->
-<section class="section hero section--lit" id="hero">
+<section class="section hero z-air" id="hero">
   <div class="wrap hero__intro">
     <p class="label" data-reveal>HydroMax · 300 ml</p>
-    <h1 class="d1" data-reveal >Charged water,<br>in <span class="hi">three minutes</span>.</h1>
-    <p class="lead" data-reveal >
+    <h1 class="d1" data-reveal style="--d:70ms">Charged water,<br>in <span class="hi">three minutes</span>.</h1>
+    <p class="lead" data-reveal style="--d:140ms">
       A 6th-gen DuPont PEM cell inside a 300 ml bottle. Tap, RO, filtered or mineral —
       it dissolves up to <b>9,000 PPB</b> of molecular hydrogen and drives ORP down to <b>−450 mV</b>.
     </p>
 
-    <div class="hero__meta" data-reveal >
+    <div class="hero__meta" data-reveal style="--d:190ms">
       <span class="hero__rating">
         <span class="stars" aria-hidden="true">
           <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
@@ -146,29 +127,23 @@
       </span>
     </div>
 
-    <div class="hero__cta" data-reveal >
-      <a href="#configure" class="btn btn--primary btn--lg">Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
-      <a href="#science" class="btn btn--ghost btn--lg">How it works</a>
+    <div class="hero__cta" data-reveal style="--d:240ms">
+      <a href="#configure" class="btn btn--primary btn--lg" data-ripple>Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
+      <a href="#science" class="btn btn--ghost btn--lg" data-ripple>How it works</a>
     </div>
   </div>
 
-  <!-- LAW 5 · the product stands in water.
-       The pool is a real Gerstner field on one canvas, not a picture of
-       one — see water.js. It pauses off-screen and holds a static frame
-       under reduced motion. The plate's ratio matches the render's so
-       there is no letterbox seam at any size. -->
-  <div class="hero__stage">
-    <div class="hero__plate" data-hero-plate>
-      <picture>
-        <source srcset="assets/hero-render.webp" type="image/webp">
-        <img src="assets/hero-render.png" alt="Adivaa HydroMax 300 ml hydrogen water bottle, matte black with a lit blue indicator ring and vented base" width="650" height="1200" fetchpriority="high">
-      </picture>
-      <!-- the floating stat card already carries 9,000 PPB — the sticker earns its
-           place only if it adds something, so it carries the offer instead -->
-    </div>
+  <!-- The plate is --plate (#F5F5F5), sampled from this render's own backdrop,
+       so `contain` shows no rectangle at any plate ratio. -->
+  <div class="hero__plate" data-hero-plate>
+    <img src="assets/hero-studio.jpg" alt="Adivaa HydroMax 300 ml hydrogen water bottle, matte black with a lit blue indicator ring and vented base" width="1122" height="1402" fetchpriority="high">
+    <!-- The simulation draws over the <img>, which stays as the fallback for
+         reduced motion, a tainted canvas, or no JS at all. -->
+    <!-- the floating stat card already carries 9,000 PPB — the sticker earns its
+         place only if it adds something, so it carries the offer instead -->
     <div class="hero__sticker"><span class="sticker"><b>−17%</b><span>Launch offer</span></span></div>
     <div class="hero__stat">
-      <div class="num">9,000 <small>PPB</small></div>
+      <div class="num"><span data-count="9000">0</span> <small>PPB</small></div>
       <div class="cap">Deep infusion · 18 min</div>
     </div>
   </div>
@@ -177,11 +152,11 @@
 <!-- ══════════════ 01b · CONFIGURE — the buy block ══════════════
      Each control sits with the thing it changes, and the summary
      updates as you work rather than only at the end. -->
-<section class="section section--tint" id="configure">
+<section class="section z-surface" id="configure">
   <div class="wrap">
     <div class="shead shead--center">
       <p class="label" data-reveal>Configure</p>
-      <h2 class="d2" data-reveal >Make it yours.</h2>
+      <h2 class="d2" data-reveal style="--d:60ms">Make it yours.</h2>
     </div>
 
     <div class="config">
@@ -200,7 +175,7 @@
           </div>
         </div>
 
-        <div class="opt" data-reveal >
+        <div class="opt" data-reveal style="--d:70ms">
           <div class="opt__head">
             <div>
               <h3 class="h4">Accidental care plan</h3>
@@ -224,7 +199,7 @@
           </div>
         </div>
 
-        <div class="gift" data-reveal >
+        <div class="gift" data-reveal style="--d:140ms">
           <span class="gift__ico"><svg><use href="#i-gift"/></svg></span>
           <div>
             <b>Free with this order</b>
@@ -232,14 +207,14 @@
           </div>
         </div>
 
-        <p class="wa" data-reveal >
+        <p class="wa" data-reveal style="--d:180ms">
           <svg><use href="#i-wa"/></svg>
           To know more about HydroMax,
           <a href="https://wa.me/919821551009" target="_blank" rel="noopener">chat with our team <span aria-hidden="true">→</span></a>
         </p>
       </div>
 
-      <aside class="config__summary" data-reveal >
+      <aside class="config__summary" data-reveal style="--d:100ms">
         <div class="summary">
           <p class="label label--plain">Your order</p>
           <div class="summary__rows">
@@ -249,7 +224,7 @@
             <div><span>Shipping, pan-India</span><b class="is-free">Free</b></div>
           </div>
           <div class="summary__total"><span>Total</span><b data-total>₹15,999</b></div>
-          <a href="#buy" class="btn btn--primary btn--lg">Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
+          <a href="#buy" class="btn btn--primary btn--lg" data-ripple>Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
           <a href="#buy" class="btn btn--ghost btn--sm" style="width:100%;margin-top:var(--s-3)">Book a demo</a>
           <p class="summary__emi">MRP inclusive of all taxes · No-cost EMI from ₹1,346/month</p>
           <div class="hero__micro">
@@ -265,11 +240,11 @@
 </section>
 
 <!-- ══════════════ 02 · CERT + PRESS STRIP ══════════════ -->
-<section class="marquee" aria-label="Certifications and press">
+<section class="marquee z-surface" aria-label="Certifications and press">
   <p class="marquee__head">Certifications &amp; press releases</p>
   <div class="marquee__viewport">
     <!-- one copy in the markup; app.js clones it once for the seamless loop -->
-    <div class="marquee__track">
+    <div class="marquee__track" data-marquee>
         <span class="mk" title="FDA"><svg class="mk__logo" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="2.93 2.65 471.93 191.57" fill="currentColor"><path d="M24.549 194.21H2.934V2.65h190.03c83.355 0 96.509 74.881 96.509 74.881L336.248 2.65h49.015l89.597 145.24-28.068 46.314h-118.14v-23.106h132.14L360.702 2.648s-65.964 114.78-80.125 137.14c-14.162 22.361-40.763 54.411-86.327 54.411h-70.569V80.159h22.361v90.933h51.429c22.744 0 71.554-19.379 71.554-74.162s-52.175-71.926-69.318-71.926H24.547v169.19zm7.4535 0v-81.243h83.479v22.361h-61.119v58.883h-22.361zm83.479-90.933V80.171h-61.119V55.663h140.64c21.082 0 43.466 17.054 43.466 42.023s-22.625 42.112-38.758 42.112h-21.924V80.17h-23.106v81.989h45.03c28.52 0 61.491-24.754 61.491-63.728 0-38.601-29.986-65.218-65.844-65.218h-163.35v70.063h83.479zm142.73 90.933 102.49-169.19 84.225 137.14h-116.27v-22.361h75.28l-43.23-70.436-71.181 124.85h-31.305z" /></svg><span class="mk__cap">Recognized</span></span>
         <span class="mk" title="Business Standard"><svg class="mk__logo" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="9 1 374.04 44.03" fill="currentColor"><path d="M 205.238 2.546 C 204.091 3.349, 202.624 5.609, 201.977 7.568 C 200 13.560, 201.465 17.509, 208.404 24.898 C 216.640 33.667, 218.369 36.395, 217.608 39.426 C 216.145 45.255, 209.433 43.004, 205.765 35.454 C 202.562 28.860, 201 29.613, 201.001 37.750 L 201.002 44.500 208.979 44.721 C 215.964 44.914, 217.277 44.666, 219.540 42.719 C 222.691 40.009, 223.762 33.840, 222.006 28.519 C 221.332 26.476, 217.971 21.811, 214.537 18.152 C 207.534 10.690, 205.736 7.851, 206.596 5.611 C 208.477 0.710, 215.078 4.192, 217.175 11.190 C 219.072 17.522, 221 16.040, 221 8.249 L 221 1.499 214.162 1.292 C 209.497 1.151, 206.661 1.549, 205.238 2.546 M 305.750 1.716 C 302.661 2.184, 302.288 3.164, 304.500 5 C 305.501 5.830, 306 8.076, 306 11.745 C 306 16.409, 305.782 17.064, 304.565 16.054 C 302.246 14.129, 296.922 15.196, 294.855 18 C 290.539 23.857, 290.727 37.952, 295.186 42.698 C 297.558 45.223, 302.779 45.821, 304.800 43.800 C 305.733 42.867, 306 42.867, 306 43.800 C 306 44.556, 307.667 45, 310.500 45 C 314.726 45, 316.266 43.900, 314 42.500 C 313.386 42.121, 313 33.990, 313 21.441 L 313 1 310.750 1.150 C 309.512 1.232, 307.262 1.487, 305.750 1.716 M 373.750 1.716 C 370.661 2.184, 370.288 3.164, 372.500 5 C 373.501 5.830, 374 8.076, 374 11.745 C 374 16.409, 373.782 17.064, 372.565 16.054 C 370.246 14.129, 364.922 15.196, 362.855 18 C 358.539 23.857, 358.727 37.952, 363.186 42.698 C 365.558 45.223, 370.779 45.821, 372.800 43.800 C 373.733 42.867, 374 42.867, 374 43.800 C 374 44.556, 375.667 45, 378.500 45 C 382.726 45, 384.266 43.900, 382 42.500 C 381.386 42.121, 381 33.990, 381 21.441 L 381 1 378.750 1.150 C 377.512 1.232, 375.262 1.487, 373.750 1.716 M 9 2.878 C 9 3.360, 9.675 4.315, 10.500 5 C 12.716 6.839, 12.716 40.161, 10.500 42 C 7.603 44.404, 9.079 45, 17.935 45 C 31.677 45, 36 42.364, 36 33.986 C 36 29.133, 34.332 26.713, 29.140 24.031 L 26.780 22.812 29.826 20.959 C 33.522 18.712, 35 16.152, 35 12 C 35 4.504, 30.756 2, 18.050 2 C 13.072 2, 9 2.395, 9 2.878 M 87.384 3.442 C 86.357 6.118, 87.488 8.495, 89.954 8.845 C 93.098 9.291, 95.332 6.489, 93.926 3.862 C 92.745 1.654, 88.182 1.361, 87.384 3.442 M 231 5.050 C 231 7.716, 228.753 12.008, 226.102 14.407 C 223.631 16.644, 223.404 18, 225.500 18 C 226.750 18, 227 19.992, 227 29.929 C 227 43.368, 227.706 45, 233.515 45 C 235.865 45, 237.358 44.327, 238.443 42.777 C 240.185 40.290, 240.538 36, 239 36 C 238.450 36, 238 36.589, 238 37.309 C 238 38.029, 237.339 39.491, 236.532 40.559 C 235.215 42.300, 235.060 41.240, 235.032 30.250 L 235 18 237.500 18 C 238.875 18, 240 17.550, 240 17 C 240 16.450, 238.875 16, 237.500 16 C 235.090 16, 235 15.767, 235 9.500 C 235 3.667, 234.795 3, 233 3 C 231.651 3, 231 3.667, 231 5.050 M 20 13 C 20 22.440, 20.567 23.433, 24 20 C 26.561 17.439, 26.842 7.984, 24.429 5.571 C 20.886 2.029, 20 3.514, 20 13 M 43.250 15.807 C 39.178 16.102, 37.871 17.184, 40 18.500 C 40.566 18.850, 41 23.770, 41 29.837 C 41 42.270, 42.121 45, 47.228 45 C 48.941 45, 51.165 44.255, 52.171 43.345 C 53.873 41.805, 54 41.805, 54 43.345 C 54 44.640, 54.979 45, 58.500 45 C 62.726 45, 64.266 43.900, 62 42.500 C 61.415 42.138, 61 36.407, 61.001 28.691 L 61.001 15.500 56.001 15.847 C 50.728 16.212, 49.986 16.914, 52.590 19.075 C 54.782 20.894, 54.290 38.587, 52.008 39.996 C 49.304 41.665, 48.509 39.129, 48 27.204 L 47.500 15.500 43.250 15.807 M 67.987 17.013 C 65.445 19.555, 65.315 26.021, 67.750 28.714 C 68.713 29.778, 71.638 32.333, 74.250 34.391 C 79.234 38.319, 79.952 39.965, 77.548 41.960 C 75.106 43.987, 71.936 42.109, 69.853 37.401 C 68.782 34.980, 67.477 33, 66.953 33 C 66.429 33, 66 35.619, 66 38.821 L 66 44.642 72.429 44.819 C 78.286 44.981, 79.042 44.762, 80.929 42.363 C 85.071 37.097, 82.897 30.571, 75.471 25.982 C 70.909 23.163, 69.301 20.270, 71.225 18.347 C 73.294 16.278, 75.674 17.643, 77.712 22.067 C 80.299 27.683, 82 27.132, 82 20.679 L 82 15.358 75.987 15.192 C 71.176 15.060, 69.576 15.424, 67.987 17.013 M 88.250 15.723 C 85.031 16.123, 84.071 17.308, 86 18.500 C 86.572 18.853, 87 23.991, 87 30.500 C 87 37.009, 86.572 42.147, 86 42.500 C 83.529 44.027, 85.475 45, 91 45 C 96.525 45, 98.471 44.027, 96 42.500 C 95.414 42.138, 95 36.323, 95 28.441 C 95 13.603, 95.639 14.806, 88.250 15.723 M 100.750 15.689 C 98.815 16.195, 98.455 17.545, 100 18.500 C 100.572 18.853, 101 23.991, 101 30.500 C 101 37.009, 100.572 42.147, 100 42.500 C 97.529 44.027, 99.475 45, 105 45 C 110.525 45, 112.471 44.027, 110 42.500 C 109.438 42.153, 109 37.364, 109 31.563 C 109 23.749, 109.353 20.952, 110.456 20.036 C 113.337 17.646, 114 19.990, 114 32.559 L 114 45 119 45 C 124.146 45, 125.114 44.170, 122.500 42 C 121.334 41.032, 121 38.319, 121 29.812 C 121 23.793, 120.534 17.998, 119.965 16.934 C 118.812 14.780, 114.148 14.315, 110.934 16.035 C 109.601 16.749, 109 16.749, 109 16.035 C 109 15.011, 104.129 14.806, 100.750 15.689 M 130.655 16.133 C 127.889 17.741, 125.047 24.880, 125.022 30.282 C 124.981 39.232, 129.142 45, 135.641 45 C 140.209 45, 141.876 44.140, 143.537 40.928 C 146.408 35.376, 144.806 32.718, 141.787 38.024 C 140.844 39.680, 139.312 41.327, 138.381 41.684 C 135.986 42.603, 133 38.555, 133 34.389 L 133 31 139.351 31 L 145.701 31 144.921 26.067 C 143.995 20.204, 142.638 17.412, 140.043 16.023 C 137.585 14.708, 133.015 14.761, 130.655 16.133 M 150.987 17.013 C 148.445 19.555, 148.315 26.021, 150.750 28.714 C 151.713 29.778, 154.637 32.333, 157.250 34.391 C 162.234 38.319, 162.952 39.965, 160.548 41.960 C 158.106 43.987, 154.936 42.109, 152.853 37.401 C 151.782 34.980, 150.477 33, 149.953 33 C 149.429 33, 149 35.619, 149 38.821 L 149 44.642 155.429 44.819 C 161.286 44.981, 162.042 44.762, 163.929 42.363 C 168.071 37.097, 165.897 30.571, 158.471 25.982 C 153.909 23.163, 152.301 20.270, 154.225 18.347 C 156.294 16.278, 158.674 17.643, 160.712 22.067 C 163.299 27.683, 165 27.132, 165 20.679 L 165 15.358 158.987 15.192 C 154.176 15.060, 152.576 15.424, 150.987 17.013 M 170.987 17.013 C 168.445 19.555, 168.315 26.021, 170.750 28.714 C 171.713 29.778, 174.637 32.333, 177.250 34.391 C 182.234 38.319, 182.952 39.965, 180.548 41.960 C 178.106 43.987, 174.936 42.109, 172.853 37.401 C 171.782 34.980, 170.477 33, 169.953 33 C 169.429 33, 169 35.619, 169 38.821 L 169 44.642 175.429 44.819 C 181.286 44.981, 182.042 44.762, 183.929 42.363 C 188.071 37.097, 185.897 30.571, 178.471 25.982 C 173.909 23.163, 172.301 20.270, 174.225 18.347 C 176.294 16.278, 178.674 17.643, 180.712 22.067 C 183.299 27.683, 185 27.132, 185 20.679 L 185 15.358 178.987 15.192 C 174.176 15.060, 172.576 15.424, 170.987 17.013 M 244.166 16.596 C 240.926 18.866, 241.443 24.351, 244.944 24.845 C 248.055 25.284, 250.333 22.491, 248.959 19.923 C 248.331 18.750, 248.344 17.905, 248.997 17.502 C 250.846 16.359, 252 18.086, 252 21.995 C 252 25.450, 251.582 26.107, 248.160 28.030 C 239.268 33.028, 238.343 45, 246.849 45 C 248.337 45, 250.509 44.331, 251.676 43.514 C 253.552 42.200, 253.863 42.200, 254.367 43.514 C 255.267 45.860, 260.627 45.371, 262.443 42.777 C 263.299 41.555, 264 39.980, 264 39.277 C 264 37.318, 261.024 37.761, 260.825 39.750 C 260.728 40.712, 260.391 36.176, 260.075 29.668 C 259.581 19.506, 259.226 17.636, 257.559 16.418 C 254.942 14.506, 247 14.612, 244.166 16.596 M 266.750 15.689 C 264.815 16.195, 264.455 17.545, 266 18.500 C 266.572 18.853, 267 23.991, 267 30.500 C 267 37.009, 266.572 42.147, 266 42.500 C 263.529 44.027, 265.475 45, 271 45 C 276.525 45, 278.471 44.027, 276 42.500 C 275.438 42.153, 275 37.364, 275 31.563 C 275 23.749, 275.353 20.952, 276.456 20.036 C 279.337 17.646, 280 19.990, 280 32.559 L 280 45 285 45 C 290.146 45, 291.114 44.170, 288.500 42 C 287.334 41.032, 287 38.319, 287 29.812 C 287 23.793, 286.534 17.998, 285.965 16.934 C 284.812 14.780, 280.148 14.315, 276.934 16.035 C 275.601 16.749, 275 16.749, 275 16.035 C 275 15.011, 270.129 14.806, 266.750 15.689 M 319.166 16.596 C 315.926 18.866, 316.443 24.351, 319.944 24.845 C 323.055 25.284, 325.333 22.491, 323.959 19.923 C 323.331 18.750, 323.344 17.905, 323.997 17.502 C 325.846 16.359, 327 18.086, 327 21.995 C 327 25.450, 326.582 26.107, 323.160 28.030 C 314.268 33.028, 313.343 45, 321.849 45 C 323.337 45, 325.509 44.331, 326.676 43.514 C 328.552 42.200, 328.863 42.200, 329.367 43.514 C 330.267 45.860, 335.627 45.371, 337.443 42.777 C 338.299 41.555, 339 39.980, 339 39.277 C 339 37.318, 336.024 37.761, 335.825 39.750 C 335.728 40.712, 335.391 36.176, 335.075 29.668 C 334.581 19.506, 334.226 17.636, 332.559 16.418 C 329.942 14.506, 322 14.612, 319.166 16.596 M 341.008 15.974 C 339.820 16.725, 339.770 17.170, 340.758 18.158 C 342.292 19.692, 342.509 41.567, 341 42.500 C 338.474 44.061, 340.539 45, 346.500 45 C 351.611 45, 353 44.679, 353 43.500 C 353 42.675, 352.325 42, 351.500 42 C 350.287 42, 350.003 40.423, 350.014 33.750 C 350.033 22.122, 350.368 21.263, 354.829 21.393 C 358.265 21.493, 358.500 21.308, 358.500 18.500 C 358.500 15.955, 358.074 15.451, 355.690 15.178 C 354.144 15.001, 352.231 15.393, 351.440 16.050 C 350.418 16.898, 350 16.919, 350 16.122 C 350 14.760, 343.109 14.646, 341.008 15.974 M 134.070 18.870 C 133.481 19.969, 133 22.698, 133 24.934 C 133 28.604, 133.243 29, 135.500 29 C 137.825 29, 138 28.659, 138 24.122 C 138 18.418, 135.850 15.544, 134.070 18.870 M 301.045 19.446 C 299.218 21.647, 299.288 38.716, 301.131 40.559 C 302.047 41.474, 302.997 41.621, 304 41.001 C 306.223 39.627, 306.152 21.729, 303.914 19.488 C 302.485 18.057, 302.201 18.053, 301.045 19.446 M 369.045 19.446 C 367.218 21.647, 367.288 38.716, 369.131 40.559 C 370.047 41.474, 370.997 41.621, 372 41.001 C 374.223 39.627, 374.152 21.729, 371.914 19.488 C 370.485 18.057, 370.201 18.053, 369.045 19.446 M 20 32.941 C 20 38.074, 20.445 42.157, 21.044 42.527 C 21.618 42.882, 23.193 42.448, 24.544 41.563 C 26.661 40.176, 27 39.192, 27 34.431 C 27 29.902, 26.559 28.468, 24.545 26.455 C 20.559 22.468, 20 23.265, 20 32.941 M 249.750 30.973 C 247.804 33.722, 247.403 39.513, 249.087 40.554 C 251.103 41.799, 252.116 39.317, 251.807 33.893 L 251.500 28.500 249.750 30.973 M 324.750 30.973 C 322.804 33.722, 322.403 39.513, 324.087 40.554 C 326.103 41.799, 327.116 39.317, 326.807 33.893 L 326.500 28.500 324.750 30.973" stroke="none" fill="currentColor" fill-rule="evenodd" /></svg><span class="mk__cap">Featured</span></span>
         <span class="mk" title="CE"><svg class="mk__logo" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" fill="currentColor"><path d="M110,199.498744A100,100 0 0 1 100,200A100,100 0 0 1 100,0A100,100 0 0 1 110,0.501256L110,30.501256A70,70 0 0 0 100,30A70,70 0 0 0 100,170A70,70 0 0 0 110,169.498744Z" fill="currentColor" /><path d="M280,199.498744A100,100 0 0 1 270,200A100,100 0 0 1 270,0A100,100 0 0 1 280,0.501256L280,30.501256A70,70 0 0 0 270,30A70,70 0 0 0 201.620283,85L260,85L260,115L201.620283,115A70,70 0 0 0 270,170A70,70 0 0 0 280,169.498744Z" fill="currentColor" /></svg><span class="mk__cap">Certified</span></span>
@@ -284,32 +259,32 @@
 </section>
 
 <!-- ══════════════ 03 · THE GAP — session 2 · paper ══════════════ -->
-<section class="section" id="gap">
+<section class="section z-shallow" id="gap">
   <div class="wrap">
     <div class="split">
       <div>
         <p class="label" data-reveal>01 — The gap</p>
-        <h2 class="d2 mt-4" data-reveal >Your RO gave you clean water.<br>It didn't give you <span class="hi">this</span>.</h2>
-        <p class="lead mt-4" data-reveal >
+        <h2 class="d2 mt-4" data-reveal style="--d:60ms">Your RO gave you clean water.<br>It didn't give you <span class="hi">this</span>.</h2>
+        <p class="lead mt-4" data-reveal style="--d:120ms">
           Filtration removes what you don't want. It doesn't add anything back — and it leaves the
           water's oxidation-reduction potential sitting on the wrong side of zero.
         </p>
         <div class="grid mt-6" style="gap:var(--s-4)">
-          <div class="card card--fill" data-reveal >
+          <div class="card card--fill" data-reveal style="--d:160ms">
             <div style="display:flex;gap:var(--s-4);align-items:flex-start">
               <div class="card__icon" style="margin:0;background:var(--paper)"><svg><use href="#i-filter"/></svg></div>
               <div><h3 class="h5">RO strips, it doesn't add</h3>
               <p class="body-sm mt-2">Reverse osmosis leaves water at roughly <b>+150 mV</b> ORP. Clean, but oxidising.</p></div>
             </div>
           </div>
-          <div class="card card--fill" data-reveal >
+          <div class="card card--fill" data-reveal style="--d:220ms">
             <div style="display:flex;gap:var(--s-4);align-items:flex-start">
               <div class="card__icon" style="margin:0;background:var(--paper)"><svg><use href="#i-plates"/></svg></div>
               <div><h3 class="h5">Alkaline bottles need minerals</h3>
               <p class="body-sm mt-2">Plate-only bottles rely on dissolved minerals to electrolyse — so they underperform on RO water, which is what most Indian homes actually drink.</p></div>
             </div>
           </div>
-          <div class="card card--fill" data-reveal >
+          <div class="card card--fill" data-reveal style="--d:280ms">
             <div style="display:flex;gap:var(--s-4);align-items:flex-start">
               <div class="card__icon" style="margin:0;background:var(--paper)"><svg><use href="#i-drop"/></svg></div>
               <div><h3 class="h5">H₂ is the smallest molecule there is</h3>
@@ -318,7 +293,7 @@
           </div>
         </div>
       </div>
-      <figure class="frame frame--lg split__media" data-reveal style="aspect-ratio:4/5">
+      <figure class="frame frame--lg split__media" data-reveal style="--d:100ms;aspect-ratio:4/5">
         <img src="assets/pour.jpg" alt="Water being poured from the HydroMax bottle into a glass" loading="lazy">
         <figcaption>Tap · RO · filtered · mineral</figcaption>
       </figure>
@@ -327,34 +302,34 @@
 </section>
 
 <!-- ══════════════ 04 · SOUND FAMILIAR — session 1 · tint ══════════════ -->
-<section class="section section--tint" id="problem">
+<section class="section section--deep z-mid waterline" id="problem">
   <div class="wrap">
     <div class="shead">
       <p class="label" data-reveal>Sound familiar?</p>
-      <h2 class="d2" data-reveal >You're drinking water.<br>But still feeling <span class="hi">off</span>?</h2>
-      <p class="lead" data-reveal >
+      <h2 class="d2" data-reveal style="--d:60ms">You're drinking water.<br>But still feeling <span class="hi">off</span>?</h2>
+      <p class="lead" data-reveal style="--d:120ms">
         Four things almost everyone writes off as "just a busy week." They share one cause,
         and it isn't how many litres you got through.
       </p>
     </div>
 
     <div class="grid grid--4 mt-8">
-      <article class="card card--hover symptom" data-reveal>
+      <article class="card card--hover symptom" data-ripple data-reveal>
         <p class="symptom__n">01</p>
         <h3 class="symptom__q">Still tired?</h3>
         <p class="body-sm">Even after 7–8 hours of sleep. Oxidative stress is draining your cells before the day begins.</p>
       </article>
-      <article class="card card--hover symptom" data-reveal >
+      <article class="card card--hover symptom" data-ripple data-reveal style="--d:70ms">
         <p class="symptom__n">02</p>
         <h3 class="symptom__q">Brain fog?</h3>
         <p class="body-sm">Slow thinking, hard to focus by noon. Your cells aren't producing energy efficiently.</p>
       </article>
-      <article class="card card--hover symptom" data-reveal >
+      <article class="card card--hover symptom" data-ripple data-reveal style="--d:140ms">
         <p class="symptom__n">03</p>
         <h3 class="symptom__q">Energy dips?</h3>
         <p class="body-sm">The 2pm crash, reaching for coffee or sugar. Chronic inflammation quietly burning cellular energy.</p>
       </article>
-      <article class="card card--hover symptom" data-reveal >
+      <article class="card card--hover symptom" data-ripple data-reveal style="--d:210ms">
         <p class="symptom__n">04</p>
         <h3 class="symptom__q">Bloating?</h3>
         <p class="body-sm">Heavy, tight stomach even after small meals — likely gut irritation slowing digestion.</p>
@@ -364,26 +339,27 @@
 </section>
 
 <!-- ══════════════ 05 · THE ROOT CAUSE — session 1 · DEEP ══════════════ -->
-<section class="section section--deep section--clip" id="science">
+<section class="section section--deep section--clip z-deep" id="science">
+  <div class="bubbles" data-bubbles="20"></div>
   <div class="wrap" style="position:relative;z-index:2">
     <div class="split split--wide">
       <div class="split__copy">
         <p class="label" data-reveal>The root cause</p>
-        <h2 class="d2" data-reveal >It's not how much<br>you drink. It's <span class="hi">what<br>your water does</span>.</h2>
-        <p class="lead" data-reveal >
+        <h2 class="d2" data-reveal style="--d:60ms">It's not how much<br>you drink. It's <span class="hi">what<br>your water does</span>.</h2>
+        <p class="lead" data-reveal style="--d:120ms">
           Molecular hydrogen is the smallest molecule there is. Small enough to pass into the cell,
           small enough to cross the blood–brain barrier — and selective enough to neutralise
           the most damaging free radicals while leaving the useful ones alone.
         </p>
-        <p class="lead" data-reveal >
+        <p class="lead" data-reveal style="--d:160ms">
           It reacts with a hydroxyl radical and the only thing left behind is water.
         </p>
-        <div data-reveal >
+        <div data-reveal style="--d:220ms">
           <a href="#ppb" class="tlink">Read the full science <span aria-hidden="true">→</span></a>
         </div>
       </div>
 
-      <div class="media media--cutaway" data-reveal >
+      <div class="media media--cutaway" data-reveal style="--d:120ms">
         <img src="assets/cutaway-full.jpg" alt="Cutaway of the HydroMax base: titanium plates separated by a PEM membrane, hydrogen rising into the water above while oxygen vents out of the side" loading="lazy" width="1067" height="1600">
       </div>
     </div>
@@ -437,12 +413,12 @@
         <h3 class="h4">Small enough to matter</h3>
         <p class="body-sm">H₂ is the smallest molecule in existence — it diffuses into cells and organelles that larger antioxidants simply can't reach.</p>
       </div>
-      <div class="card card--deep" data-reveal >
+      <div class="card card--deep" data-reveal style="--d:70ms">
         <div class="card__icon">02</div>
         <h3 class="h4">Selective, not scorched-earth</h3>
         <p class="body-sm">It targets the most cytotoxic radicals and leaves the signalling ones your body actually needs.</p>
       </div>
-      <div class="card card--deep" data-reveal >
+      <div class="card card--deep" data-reveal style="--d:140ms">
         <div class="card__icon">03</div>
         <h3 class="h4">Leaves nothing behind</h3>
         <p class="body-sm">The reaction product is water. No residue, no build-up, nothing to process.</p>
@@ -452,17 +428,17 @@
 </section>
 
 <!-- ══════════════ 06 · INSIDE THE BOTTLE — session 1 · paper ══════════════ -->
-<section class="section" id="inside">
+<section class="section section--deep z-deep" id="inside">
   <div class="wrap">
     <div class="shead">
       <p class="label" data-reveal>03 — Inside the bottle</p>
-      <h2 class="d2" data-reveal >Most of the cost is in parts<br>you never see.</h2>
+      <h2 class="d2" data-reveal style="--d:60ms">Most of the cost is in parts<br>you never see.</h2>
     </div>
     <div class="split mt-8" style="align-items:center">
       <div class="media media--wide media--md" data-reveal>
         <img src="assets/cutaway-plates.jpg" alt="Cutaway render of the electrolysis chamber: two titanium plates separated by a proton-exchange membrane, hydrogen bubbles rising into the water" loading="lazy" width="1400" height="1400">
       </div>
-      <div class="split__copy" data-reveal >
+      <div class="split__copy" data-reveal style="--d:100ms">
         <h3 class="d3">Medical-grade titanium.<br>DuPont PEM + SPE.</h3>
         <p class="lead">
           Solid polymer electrolyte separates the hydrogen from the oxygen and vents the ozone
@@ -481,11 +457,11 @@
 </section>
 
 <!-- ══════════════ 07 · EVERYTHING IT DOES — session 2 · tint ══════════════ -->
-<section class="section section--tint" id="specs-bento">
+<section class="section section--deep z-deep" id="specs-bento">
   <div class="wrap">
     <div class="shead">
       <p class="label" data-reveal>04 — Everything it does</p>
-      <h2 class="d2" data-reveal >The whole spec sheet,<br>in one screen.</h2>
+      <h2 class="d2" data-reveal style="--d:60ms">The whole spec sheet,<br>in one screen.</h2>
     </div>
   </div>
   <div class="wrap wrap--wide mt-8">
@@ -513,12 +489,12 @@
 </section>
 
 <!-- ══════════════ 08 · HIGHEST IN ITS CLASS — session 1 · paper ══════════════ -->
-<section class="section" id="ppb">
+<section class="section section--deep z-mid" id="ppb">
   <div class="wrap">
     <div class="shead">
       <p class="label" data-reveal>Highest in its class</p>
-      <h2 class="d2" data-reveal ><span class="hi">3× more</span> hydrogen<br>than the market.</h2>
-      <p class="lead" data-reveal >
+      <h2 class="d2" data-reveal style="--d:60ms"><span class="hi">3× more</span> hydrogen<br>than the market.</h2>
+      <p class="lead" data-reveal style="--d:120ms">
         HydroMax reaches 9,000 PPB in Deep Infusion mode. Measurably more hydrogen per sip,
         which is the only number that actually changes the outcome.
       </p>
@@ -528,39 +504,39 @@
       <div class="bars" data-reveal>
         <div class="bar">
           <div class="bar__top"><span class="bar__name">Standard bottles — market average</span><span class="bar__val">1,500 PPB</span></div>
-          <div class="bar__track"><span class="bar__fill" style="width:17%"></span></div>
+          <div class="bar__track"><span class="bar__fill" data-bar="17"></span></div>
         </div>
         <div class="bar">
           <div class="bar__top"><span class="bar__name">Premium competitors</span><span class="bar__val">3,000 PPB</span></div>
-          <div class="bar__track"><span class="bar__fill" style="width:33%"></span></div>
+          <div class="bar__track"><span class="bar__fill" data-bar="33"></span></div>
         </div>
         <div class="bar is-hero">
           <div class="bar__top"><span class="bar__name">HydroMax — Deep Infusion</span><span class="bar__val">9,000 PPB</span></div>
-          <div class="bar__track"><span class="bar__fill" style="width:100%"></span></div>
+          <div class="bar__track"><span class="bar__fill" data-bar="100"></span></div>
         </div>
         <p class="body-xs">Category figures are typical published ranges, not measurements of any specific competing product. Concentrations as measured at end of infusion cycle; hydrogen dissipates over time in any container.</p>
       </div>
 
-      <div class="card card--fill card--flat" data-reveal >
+      <div class="card card--fill card--flat" data-reveal style="--d:120ms">
         <p class="label label--plain">Max H₂ concentration</p>
-        <div class="fig__num" style="font-size:clamp(3rem,7vw,4.75rem)">9,000<sup>PPB</sup></div>
+        <div class="fig__num" style="font-size:clamp(3rem,7vw,4.75rem)"><span data-count="9000">0</span><sup>PPB</sup></div>
         <p class="body-sm">Published research suggests 1,600+ PPB is where measurable antioxidant effects begin. HydroMax reaches up to <b>5×</b> that threshold.</p>
       </div>
     </div>
 
     <div class="grid grid--3 mt-8">
       <div class="card card--hover" data-reveal>
-        <div class="card__icon"><svg><use href="#i-bolt"/></svg></div>
+        <div class="card__icon">↑</div>
         <h3 class="h4">Therapeutic threshold</h3>
         <p class="body-sm">1,600 PPB is where the research starts showing measurable effect. Anything below it is, functionally, just water.</p>
       </div>
-      <div class="card card--hover" data-reveal >
-        <div class="card__icon"><svg><use href="#i-drop"/></svg></div>
+      <div class="card card--hover" data-reveal style="--d:70ms">
+        <div class="card__icon">↓</div>
         <h3 class="h4">Concentration decay</h3>
         <p class="body-sm">H₂ escapes fast. A higher starting PPB means more benefit per sip, even as the glass sits there.</p>
       </div>
-      <div class="card card--hover" data-reveal >
-        <div class="card__icon"><svg><use href="#i-cert"/></svg></div>
+      <div class="card card--hover" data-reveal style="--d:140ms">
+        <div class="card__icon">✦</div>
         <h3 class="h4">DuPont certified PEM</h3>
         <p class="body-sm">The same membrane technology used in clinical-grade hydrogen therapy devices globally.</p>
       </div>
@@ -569,9 +545,10 @@
 </section>
 
 <!-- ══════════════ 09 · MEASURED, NOT CLAIMED — session 2 · tint ══════════════ -->
-<section class="section section--tint section--tight">
+<section class="section section--deep section--tight z-abyss">
   <div class="wrap wrap--wide">
     <div class="lab" data-reveal>
+      <div class="bubbles" data-bubbles="14"></div>
       <div style="position:relative;z-index:2">
         <span class="lab__badge"><span><svg><use href="#i-beaker"/></svg></span> Measured, not claimed</span>
         <h2 class="d2 mt-5">Dissolved hydrogen,<br>read at the spout.</h2>
@@ -582,8 +559,8 @@
         </p>
       </div>
       <div style="position:relative;z-index:2">
-        <div class="lab__num">9,000<sup>PPB</sup></div>
-        <div class="meter mt-5"><i style="width:100%"></div>
+        <div class="lab__num"><span data-count="9000">0</span><sup>PPB</sup></div>
+        <div class="meter mt-5" data-meter="100"><i></i></div>
         <div class="grid grid--2 mt-6" style="gap:var(--s-4)">
           <div><div class="mono" style="font-size:1.5rem;font-weight:600;letter-spacing:-.03em">−450<span style="font-size:.5em;color:var(--aqua)"> mV</span></div><p class="body-xs" style="color:rgba(255,255,255,.55)">ORP floor</p></div>
           <div><div class="mono" style="font-size:1.5rem;font-weight:600;letter-spacing:-.03em">25<span style="font-size:.5em;color:var(--aqua)"> °C</span></div><p class="body-xs" style="color:rgba(255,255,255,.55)">Test temperature</p></div>
@@ -594,15 +571,15 @@
 </section>
 
 <!-- ══════════════ 10 · THREE MODES — draggable gallery ══════════════ -->
-<section class="section" id="modes">
+<section class="section section--deep z-mid" id="modes">
   <div class="wrap">
     <div class="railhead">
       <div class="shead">
         <p class="label" data-reveal>05 — Three modes</p>
-        <h2 class="d2" data-reveal >Drink it. Mist it. Breathe it.</h2>
-        <p class="lead" data-reveal >One device, three deliveries. The nano-mist sprayer and the inhalation adapter are both in the box — no upsell, no second purchase.</p>
+        <h2 class="d2" data-reveal style="--d:60ms">Drink it. Mist it. Breathe it.</h2>
+        <p class="lead" data-reveal style="--d:120ms">One device, three deliveries. The nano-mist sprayer and the inhalation adapter are both in the box — no upsell, no second purchase.</p>
       </div>
-      <div class="rail__nav" data-reveal >
+      <div class="rail__nav" data-reveal style="--d:170ms">
         <button type="button" data-rail-prev aria-label="Previous mode"><svg><use href="#i-arrow"/></svg></button>
         <button type="button" data-rail-next aria-label="Next mode"><svg><use href="#i-arrow"/></svg></button>
       </div>
@@ -648,15 +625,15 @@
 </section>
 
 <!-- ══════════════ 11 · IN PRACTICE — session 2 · tint ══════════════ -->
-<section class="section section--tint" id="day">
+<section class="section z-shallow waterline waterline--up" id="day">
   <div class="wrap">
     <div class="railhead">
       <div class="shead">
         <p class="label" data-reveal>06 — In practice</p>
-        <h2 class="d2" data-reveal >A day with it.</h2>
-        <p class="lead" data-reveal >Three minutes is the cycle people actually use. Eighteen is for the morning you planned ahead.</p>
+        <h2 class="d2" data-reveal style="--d:60ms">A day with it.</h2>
+        <p class="lead" data-reveal style="--d:120ms">Three minutes is the cycle people actually use. Eighteen is for the morning you planned ahead.</p>
       </div>
-      <div class="rail__nav" data-reveal >
+      <div class="rail__nav" data-reveal style="--d:170ms">
         <button type="button" data-rail-prev aria-label="Previous moment"><svg><use href="#i-arrow"/></svg></button>
         <button type="button" data-rail-next aria-label="Next moment"><svg><use href="#i-arrow"/></svg></button>
       </div>
@@ -689,40 +666,41 @@
 </section>
 
 <!-- ══════════════ 12 · TESTED & CERTIFIED — session 1 · DEEP ══════════════ -->
-<section class="section section--deep section--clip" id="certs">
+<section class="section section--clip z-shallow" id="certs">
+  <div class="bubbles" data-bubbles="16"></div>
   <div class="wrap" style="position:relative;z-index:2">
     <div class="shead shead--center">
       <p class="label" data-reveal>Tested &amp; certified</p>
-      <h2 class="d2" data-reveal >Not just claims.<br>Documented proof.</h2>
+      <h2 class="d2" data-reveal style="--d:60ms">Not just claims.<br>Documented proof.</h2>
     </div>
     <div class="certgrid">
-      <div class="cert" data-reveal><div class="cert__mark">FDA</div><div class="cert__cap">Recognized</div></div>
-      <div class="cert" data-reveal ><div class="cert__mark">GMP</div><div class="cert__cap">Certified</div></div>
-      <div class="cert" data-reveal ><div class="cert__mark">CE</div><div class="cert__cap">Certified</div></div>
-      <div class="cert" data-reveal ><div class="cert__mark">ROHS</div><div class="cert__cap">Certified</div></div>
-      <div class="cert" data-reveal ><div class="cert__mark">ISO</div><div class="cert__cap">Certified</div></div>
-      <div class="cert" data-reveal ><div class="cert__mark">IEC</div><div class="cert__cap">Certified</div></div>
+      <div class="cert" data-ripple data-reveal><div class="cert__mark">FDA</div><div class="cert__cap">Recognized</div></div>
+      <div class="cert" data-ripple data-reveal style="--d:50ms"><div class="cert__mark">GMP</div><div class="cert__cap">Certified</div></div>
+      <div class="cert" data-ripple data-reveal style="--d:100ms"><div class="cert__mark">CE</div><div class="cert__cap">Certified</div></div>
+      <div class="cert" data-ripple data-reveal style="--d:150ms"><div class="cert__mark">ROHS</div><div class="cert__cap">Certified</div></div>
+      <div class="cert" data-ripple data-reveal style="--d:200ms"><div class="cert__mark">ISO</div><div class="cert__cap">Certified</div></div>
+      <div class="cert" data-ripple data-reveal style="--d:250ms"><div class="cert__mark">IEC</div><div class="cert__cap">Certified</div></div>
     </div>
     <div style="text-align:center;margin-top:var(--s-7)" data-reveal>
-      <a href="#" class="btn btn--ghostDeep">View all certificates &amp; lab reports <svg class="arw"><use href="#i-arrow"/></svg></a>
+      <a href="#" class="btn btn--ghost">View all certificates &amp; lab reports <svg class="arw"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
 </section>
 
 <!-- ══════════════ 13 · TECHNICAL SPECIFICATIONS — session 1 · tint ══════════════ -->
-<section class="section section--tint" id="specs">
+<section class="section z-surface" id="specs">
   <div class="wrap">
     <div class="split split--narrow" style="align-items:start">
       <div class="shead">
         <p class="label" data-reveal>Technical specifications</p>
-        <h2 class="d2" data-reveal >Every number,<br>on the record.</h2>
-        <p class="lead" data-reveal >No asterisks, no "up to" hiding a much smaller real figure.</p>
-        <div class="media media--wide media--md mt-6" data-reveal >
+        <h2 class="d2" data-reveal style="--d:60ms">Every number,<br>on the record.</h2>
+        <p class="lead" data-reveal style="--d:120ms">No asterisks, no "up to" hiding a much smaller real figure.</p>
+        <div class="media media--wide media--md mt-6" data-reveal style="--d:180ms">
           <img src="assets/lifestyle-desk.jpg" alt="HydroMax on a clean white desk beside a laptop" loading="lazy" width="1200" height="900">
         </div>
       </div>
 
-      <div class="specs" data-reveal >
+      <div class="specs" data-reveal style="--d:100ms">
         <div class="spec"><span class="spec__k">Capacity</span><span class="spec__v">300 ml</span></div>
         <div class="spec"><span class="spec__k">H₂ concentration</span><span class="spec__v">Up to 9,000 PPB</span></div>
         <div class="spec"><span class="spec__k">Quick Boost</span><span class="spec__v">3 min · 3,000 PPB</span></div>
@@ -743,22 +721,22 @@
 </section>
 
 <!-- ══════════════ 14 · IN THE BOX — session 2 · paper ══════════════ -->
-<section class="section" id="box">
+<section class="section z-surface" id="box">
   <div class="wrap">
     <div class="split split--rev">
       <div>
         <p class="label" data-reveal>08 — In the box</p>
-        <h2 class="d2 mt-4" data-reveal >Six things,<br>one gift box.</h2>
+        <h2 class="d2 mt-4" data-reveal style="--d:60ms">Six things,<br>one gift box.</h2>
         <ul class="boxlist mt-6">
-          <li data-reveal ><span class="n">01</span><div><b>HydroMax bottle — 300 ml</b><small>BPA-free Tritan, medical-grade titanium plate stack</small></div></li>
-          <li data-reveal ><span class="n">02</span><div><b>Hydrogen face-mist sprayer</b><small>Included free — nano-mist, refillable</small></div></li>
-          <li data-reveal ><span class="n">03</span><div><b>Inhalation adapter</b><small>Connects to the vent port on the base</small></div></li>
-          <li data-reveal ><span class="n">04</span><div><b>USB-C charging cable</b><small>Roughly two hours to a full charge</small></div></li>
-          <li data-reveal ><span class="n">05</span><div><b>Quick-start guide</b><small>Both cycles, cleaning, and what to expect</small></div></li>
-          <li data-reveal ><span class="n">06</span><div><b>Premium gift box</b><small>Ships as-is — no extra packaging needed</small></div></li>
+          <li data-reveal style="--d:120ms"><span class="n">01</span><div><b>HydroMax bottle — 300 ml</b><small>BPA-free Tritan, medical-grade titanium plate stack</small></div></li>
+          <li data-reveal style="--d:160ms"><span class="n">02</span><div><b>Hydrogen face-mist sprayer</b><small>Included free — nano-mist, refillable</small></div></li>
+          <li data-reveal style="--d:200ms"><span class="n">03</span><div><b>Inhalation adapter</b><small>Connects to the vent port on the base</small></div></li>
+          <li data-reveal style="--d:240ms"><span class="n">04</span><div><b>USB-C charging cable</b><small>Roughly two hours to a full charge</small></div></li>
+          <li data-reveal style="--d:280ms"><span class="n">05</span><div><b>Quick-start guide</b><small>Both cycles, cleaning, and what to expect</small></div></li>
+          <li data-reveal style="--d:320ms"><span class="n">06</span><div><b>Premium gift box</b><small>Ships as-is — no extra packaging needed</small></div></li>
         </ul>
       </div>
-      <figure class="frame frame--lg split__media" data-reveal style="aspect-ratio:1/1">
+      <figure class="frame frame--lg split__media" data-reveal style="--d:100ms;aspect-ratio:1/1">
         <img src="assets/in-the-box.jpg" alt="HydroMax bottle with box, mist sprayer, charging cable and accessories" loading="lazy">
       </figure>
     </div>
@@ -768,13 +746,13 @@
 <!-- ══════════════ 15 · REVIEWS — session 2 · paper blue ══════════════ -->
 <!-- PLACEHOLDER CONTENT — replace the whole block with the live review feed before publishing.
      Ratings, counts and quotes below are illustrative sample data, not real customer reviews. -->
-<section class="section section--blue" id="reviews" data-placeholder="reviews">
+<section class="section z-surface" id="reviews" data-placeholder="reviews">
   <div class="wrap">
     <div class="railhead">
       <div class="shead" style="max-width:520px">
         <p class="label" data-reveal>09 — Reviews</p>
-        <h2 class="d2" data-reveal >What people say<br>after a month.</h2>
-        <div class="card" data-reveal >
+        <h2 class="d2" data-reveal style="--d:60ms">What people say<br>after a month.</h2>
+        <div class="card" data-reveal style="--d:120ms">
           <div style="display:flex;align-items:center;gap:var(--s-4)">
             <div>
               <div class="mono" style="font-size:2.75rem;font-weight:600;letter-spacing:-.03em;line-height:1">4.6</div>
@@ -791,7 +769,7 @@
           </div>
         </div>
       </div>
-      <div class="rail__nav" data-reveal >
+      <div class="rail__nav" data-reveal style="--d:170ms">
         <button type="button" data-rail-prev aria-label="Previous reviews"><svg><use href="#i-arrow"/></svg></button>
         <button type="button" data-rail-next aria-label="More reviews"><svg><use href="#i-arrow"/></svg></button>
       </div>
@@ -838,15 +816,15 @@
 </section>
 
 <!-- ══════════════ 16 · QUESTIONS — session 2 · paper ══════════════ -->
-<section class="section" id="faq">
+<section class="section z-surface" id="faq">
   <div class="wrap">
     <div class="split" style="align-items:start;gap:clamp(28px,4vw,80px)">
       <div>
         <p class="label" data-reveal>10 — Questions</p>
-        <h2 class="d2 mt-4" data-reveal >The ones people<br>actually ask.</h2>
-        <p class="body-sm mt-5" data-reveal >Still unsure? <a href="#buy" class="hi" style="font-weight:600">Talk to us before you buy</a> — the 30-day return covers you either way.</p>
+        <h2 class="d2 mt-4" data-reveal style="--d:60ms">The ones people<br>actually ask.</h2>
+        <p class="body-sm mt-5" data-reveal style="--d:120ms">Still unsure? <a href="#buy" class="hi" style="font-weight:600">Talk to us before you buy</a> — the 30-day return covers you either way.</p>
       </div>
-      <div class="acc" data-reveal >
+      <div class="acc" data-reveal style="--d:80ms">
         <details class="acc__item" open>
           <summary class="acc__q">Does it work with RO water? <i>+</i></summary>
           <div class="acc__panel"><p class="acc__a">Yes — tap, RO, filtered or mineral. The SPE/PEM stack splits water at the membrane, so it doesn't need dissolved minerals to electrolyse. That's the main practical difference from plate-only alkaline bottles, which underperform on RO.</p></div>
@@ -885,22 +863,23 @@
 </section>
 
 <!-- ══════════════ 17 · FINAL CTA — session 2 · DEEP ══════════════ -->
-<section class="section section--deep section--clip" id="buy">
+<section class="section section--deep section--clip z-abyss waterline" id="buy">
+  <div class="bubbles" data-bubbles="24"></div>
   <div class="wrap" style="position:relative;z-index:2;text-align:center">
     <div class="shead shead--center">
       <p class="label" data-reveal>HydroMax · 300 ml</p>
-      <h2 class="d1" data-reveal >Charge your water<br>in <span class="hi">18 minutes</span>.</h2>
-      <p class="lead" data-reveal >Free hydrogen face-mist sprayer · 365-day replacement · free shipping across India.</p>
-      <div class="hero__price" data-reveal style="justify-content:center;color:#fff">
+      <h2 class="d1" data-reveal style="--d:60ms">Charge your water<br>in <span class="hi"><span data-count="18">0</span> minutes</span>.</h2>
+      <p class="lead" data-reveal style="--d:120ms">Free hydrogen face-mist sprayer · 365-day replacement · free shipping across India.</p>
+      <div class="hero__price" data-reveal style="--d:160ms;justify-content:center;color:#fff">
         <b>₹15,999</b><s class="mono" style="color:rgba(255,255,255,.5)">₹19,499</s><span class="chip chip--deep">Save ₹3,500</span>
       </div>
-      <div data-reveal style="display:flex;gap:var(--s-3);justify-content:center;flex-wrap:wrap;margin-top:var(--s-6)">
-        <a href="#buy" class="btn btn--onDeep btn--lg">Add to cart <svg class="arw"><use href="#i-arrow"/></svg></a>
+      <div data-reveal style="--d:200ms;display:flex;gap:var(--s-3);justify-content:center;flex-wrap:wrap;margin-top:var(--s-6)">
+        <a href="#buy" class="btn btn--onDeep btn--lg" data-ripple>Add to cart <svg class="arw"><use href="#i-arrow"/></svg></a>
         <a href="#science" class="btn btn--ghostDeep btn--lg">See how it works</a>
       </div>
-      <p class="body-sm" data-reveal style="margin-top:var(--s-4)">No-cost EMI from ₹1,346/mo · 30-day returns</p>
+      <p class="body-sm" data-reveal style="--d:240ms;margin-top:var(--s-4)">No-cost EMI from ₹1,346/mo · 30-day returns</p>
     </div>
-    <div class="trust mt-8" data-reveal style="max-width:820px;margin-inline:auto">
+    <div class="trust mt-8" data-reveal style="--d:300ms;max-width:820px;margin-inline:auto">
       <div style="color:#fff"><svg style="color:var(--aqua)"><use href="#i-shield"/></svg><b>365-day</b><small style="color:rgba(255,255,255,.5)">Replacement</small></div>
       <div style="color:#fff"><svg style="color:var(--aqua)"><use href="#i-refresh"/></svg><b>30-day</b><small style="color:rgba(255,255,255,.5)">Returns</small></div>
       <div style="color:#fff"><svg style="color:var(--aqua)"><use href="#i-ship"/></svg><b>Free</b><small style="color:rgba(255,255,255,.5)">Pan-India shipping</small></div>
@@ -911,7 +890,7 @@
 </main>
 
 <!-- ══════════════ FOOTER — session 2 ══════════════ -->
-<footer class="foot">
+<footer class="foot z-abyss">
   <div class="wrap">
     <div class="foot__grid">
       <div>
