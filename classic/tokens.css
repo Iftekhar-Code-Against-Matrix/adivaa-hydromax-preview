@@ -1,0 +1,115 @@
+/* ============================================================
+   CURRENT — Adivaa HydroMax design language
+   Light theme. Brand anchor #0E7897.
+   Single source of truth. Nothing in the product hardcodes a
+   value that lives in this file.
+   ============================================================ */
+
+/* Fonts are loaded via <link> in the document head, not @import — an @import
+   chain resolves serially and blocks first paint.
+
+   ⚠ The Fontshare API silently drops every family after the first when you
+   combine them in one request: a combined `f[]=general-sans&f[]=satoshi` URL
+   returns General Sans only, so Satoshi falls back to system-ui on any machine
+   that doesn't happen to have it installed locally. ONE REQUEST PER FAMILY. */
+
+:root {
+  /* ---------- 1. INK — text + structure ----------
+     Never pure black. Every neutral is tinted toward the brand hue,
+     so the page reads "cool water" even where there is no blue. */
+  --ink-900: #06222C;   /* headlines, primary text */
+  --ink-700: #133A47;   /* sub-headlines */
+  --ink-500: #4A6B76;   /* body copy, secondary */
+  --ink-300: #8AA3AC;   /* captions, meta, disabled */
+  --line:    #DCE7EB;   /* hairlines, card borders */
+  --line-strong: #C3D6DD;
+
+  /* ---------- 2. PAPER — surfaces ---------- */
+  --paper:      #FFFFFF;
+  --paper-tint: #F2F7F9;
+  --paper-blue: #EAF4F8;
+
+  /* ---------- 3. BRAND BLUE — one hue, six steps ---------- */
+  --blue-900: #05323F;   /* deep sections, inverted panels */
+  --blue-800: #084A5E;   /* cards on deep */
+  --blue-700: #0A5C75;   /* hover / pressed on brand fills */
+  --blue-600: #0E7897;   /* ★ BRAND — CTAs, links, active, units */
+  --blue-400: #4BA6C0;   /* illustration, secondary graphics */
+  --blue-200: #A9D5E2;   /* dividers on blue, meter tracks */
+  --blue-50:  #EAF4F8;
+
+  /* ---------- 4. SPARKS — strict jobs, tiny doses ----------
+     AQUA  = "hydrogen is active". GRAPHICS ONLY (fails contrast as text).
+     AMBER = "earned proof".      GRAPHICS ONLY. Max ~2% of a viewport. */
+  --aqua:      #00C8C0;
+  --aqua-soft: rgba(0, 200, 192, .14);
+  --aqua-ink:  #05605C;   /* the only legible text form of aqua */
+  --amber:     #FFB43D;
+  --amber-soft:rgba(255, 180, 61, .16);
+  --amber-ink: #7A5410;   /* the only legible text form of amber */
+
+  /* Semantic — functional UI only, never decorative */
+  --positive: #12876B;
+  --negative: #C0392F;
+
+  /* ---------- 5. TYPE ---------- */
+  --font-display: 'General Sans', 'Outfit', 'Avenir Next', system-ui, sans-serif;
+  --font-text:    'Satoshi', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-data:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Fluid scale. Display carries negative tracking — that tightness is
+     what separates "premium" from "template". */
+  --t-d0: clamp(3.5rem, 10vw, 8.5rem);      /* statement banner  0.88/-0.045em/700 */
+  --t-d1: clamp(3rem, 8.2vw, 6.75rem);      /* hero              0.94/-0.035em/600 */
+  --t-d2: clamp(2.125rem, 4.6vw, 3.875rem); /* section head      1.04/-0.030em/600 */
+  --t-d3: clamp(1.625rem, 3vw, 2.5rem);     /* sub head          1.06/-0.025em/600 */
+  --t-h4: clamp(1.1875rem, 1.5vw, 1.375rem);/* card title        1.20/-0.015em/600 */
+  --t-lead: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  --t-body: 1rem;
+  --t-sm:   0.875rem;
+  --t-xs:   0.8125rem;
+  --t-label: 0.6875rem;                     /* mono caps, 0.14em */
+
+  --lh-statement: 0.88;
+  --lh-tight: 0.94;
+  --lh-head: 1.04;
+  --lh-body: 1.6;
+  --ls-d0: -0.045em;
+  --ls-d1: -0.035em;
+  --ls-d2: -0.03em;
+  --ls-d3: -0.025em;
+  --ls-label: 0.14em;
+
+  /* ---------- 6. SPACE — 4px base ---------- */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 24px;  --s-6: 32px;  --s-7: 48px;  --s-8: 64px;
+  --s-9: 96px;  --s-10: 128px; --s-11: 160px;
+
+  --section-y: clamp(80px, 10vw, 160px);
+  --gutter:    clamp(20px, 5vw, 64px);
+  --measure:   1240px;
+  --shell:     1440px;
+  --inset:     clamp(12px, 1.4vw, 20px);   /* full-bleed panels inset from the edge */
+
+  /* ---------- 7. RADIUS — four values, plus the panel ---------- */
+  --r-sm:   12px;
+  --r-md:   20px;
+  --r-lg:   32px;
+  --r-pill: 999px;
+
+  /* ---------- 8. ELEVATION — two shadows, one glow ----------
+     Cards prefer TINT + HAIRLINE over shadow. */
+  --shadow-card: 0 1px 2px rgba(6,34,44,.04), 0 12px 32px -12px rgba(6,34,44,.10);
+  --shadow-lift: 0 2px 4px rgba(6,34,44,.05), 0 28px 60px -20px rgba(14,120,151,.28);
+  --glow-aqua:   0 0 0 1px rgba(0,200,192,.35), 0 0 40px rgba(0,200,192,.22);
+  --focus-ring:  0 0 0 3px rgba(14,120,151,.30);
+
+  /* ---------- 9. MOTION ---------- */
+  --ease-entrance: cubic-bezier(.22, 1, .36, 1);
+  --ease-ui:       cubic-bezier(.4, 0, .2, 1);
+  --ease-water:    cubic-bezier(.65, 0, .35, 1);
+  --dur-entrance: 700ms;
+  --dur-ui: 240ms;
+  --dur-water: 1200ms;
+  --stagger: 70ms;
+}

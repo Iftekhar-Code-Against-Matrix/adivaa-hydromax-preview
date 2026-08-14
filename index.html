@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HydroMax landing page — three directions | Adivaa</title>
+<meta name="description" content="Three design directions for the HydroMax 300 ml landing page, for review.">
+<meta name="theme-color" content="#0E7897">
+<!-- a shared preview link, not a page that wants to be found -->
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<!-- One request per family — Fontshare silently drops every family after the first. -->
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="apple/tokens.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100svh;
+    background: var(--paper); color: var(--ink-900);
+    font-family: var(--font-text); font-size: var(--t-body);
+    line-height: var(--lh-body); letter-spacing: var(--ls-body);
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-sm); }
+
+  .wrap { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: clamp(22px, 5vw, 48px); }
+
+  header { padding-block: clamp(48px, 8vw, 96px) clamp(28px, 4vw, 56px); text-align: center; }
+  .eyebrow {
+    font-family: var(--font-data); font-size: var(--t-label); font-weight: 500;
+    letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--blue-600);
+  }
+  h1 {
+    margin: var(--s-5) 0 0;
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(2.125rem, 5.4vw, 3.5rem);
+    line-height: var(--lh-head); letter-spacing: var(--ls-d2);
+    text-wrap: balance;
+  }
+  .sub {
+    margin: var(--s-5) auto 0; max-width: 54ch;
+    font-size: var(--t-lead); line-height: var(--lh-lead); letter-spacing: var(--ls-lead);
+    color: var(--ink-500); text-wrap: pretty;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.2vw, 28px);
+          padding-bottom: clamp(48px, 7vw, 88px); align-items: start; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; } }
+
+  .opt {
+    display: flex; flex-direction: column; height: 100%;
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    background: var(--paper); overflow: hidden; text-decoration: none;
+    transition: transform 344ms var(--spring-ui, ease), box-shadow 344ms var(--spring-ui, ease), border-color 240ms ease;
+  }
+  .opt:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--blue-600); }
+  .opt:active { transform: scale(.99); transition-duration: 90ms; }
+
+  .opt__shot { aspect-ratio: 3 / 2; background: var(--plate, #F5F5F5); position: relative; overflow: hidden; }
+  .opt__shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .opt__tag {
+    position: absolute; top: var(--s-4); left: var(--s-4); z-index: 2;
+    font-family: var(--font-data); font-size: var(--t-label); font-weight: 600;
+    letter-spacing: var(--ls-label); text-transform: uppercase;
+    background: rgba(255,255,255,.94); color: var(--ink-900);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-radius: var(--r-pill); padding: 7px 14px;
+  }
+  .opt__body { padding: clamp(20px, 2.2vw, 28px); flex: 1; display: flex; flex-direction: column; }
+  .opt__body h2 {
+    margin: 0; font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem); letter-spacing: var(--ls-d3); line-height: var(--lh-d3);
+  }
+  .opt__body p { margin: var(--s-4) 0 0; font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--ink-500); }
+  ul { margin: var(--s-5) 0 0; padding: 0; list-style: none; display: grid; gap: var(--s-3); }
+  li { font-size: var(--t-sm); color: var(--ink-500); display: flex; gap: var(--s-3); align-items: flex-start; }
+  li::before { content: ''; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-400); margin-top: .55em; }
+  .opt__go { margin-top: auto; padding-top: var(--s-6); font-weight: 700; color: var(--blue-600);
+             display: inline-flex; align-items: center; gap: var(--s-2); }
+  .opt:hover .opt__go span { transform: translateX(4px); }
+  .opt__go span { transition: transform 300ms var(--spring-ui, ease); display: inline-block; }
+
+  footer { margin-top: auto; border-top: 1px solid var(--line); padding-block: var(--s-6); }
+  .note { font-size: var(--t-xs); color: var(--ink-300); line-height: 1.6; max-width: 78ch; }
+  .note b { color: var(--ink-500); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .opt, .opt__go span { transition: none !important; }
+    .opt:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="eyebrow">Adivaa · HydroMax 300 ml</p>
+  <h1>Three directions for the landing page.</h1>
+  <p class="sub">
+    Same product, same claims, same content — three different ways of presenting it.
+    Open each on a phone as well as a laptop, then tell us which one feels closest to right.
+  </p>
+</header>
+
+<main class="wrap grid">
+  <a class="opt" href="classic/">
+    <div class="opt__shot">
+      <span class="opt__tag">Direction A</span>
+      <img src="preview-classic.jpg" alt="Direction A: the product beside the full buy block, on a light page" width="1440" height="960">
+    </div>
+    <div class="opt__body">
+      <h2>Direction A</h2>
+      <p>Dense and information-forward. Everything needed to decide is on screen early, and the buying controls sit beside the product from the first scroll.</p>
+      <ul>
+        <li>Hero pairs the product with the full buy block</li>
+        <li>Close-packed, detail-rich sections</li>
+        <li>Grids and columns throughout</li>
+      </ul>
+      <span class="opt__go">Open Direction A <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+
+  <a class="opt" href="apple/">
+    <div class="opt__shot">
+      <span class="opt__tag">Direction B</span>
+      <img src="preview-apple.jpg" alt="Direction B: a centred headline with the product below, on a light airy page" width="1440" height="960">
+    </div>
+    <div class="opt__body">
+      <h2>Direction B</h2>
+      <p>Calm and spacious. One idea per screen, larger type and imagery, and a dedicated step for configuring the order with a running total.</p>
+      <ul>
+        <li>Hero states the product; buying gets its own step</li>
+        <li>Much more whitespace, bigger typography</li>
+        <li>Galleries you can drag and throw</li>
+      </ul>
+      <span class="opt__go">Open Direction B <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+
+  <a class="opt" href="meniscus/">
+    <div class="opt__shot">
+      <span class="opt__tag">Direction C</span>
+      <img src="preview-meniscus.jpg" alt="Direction C: a deep underwater section with the product cutaway lit against dark water" width="1440" height="960">
+    </div>
+    <div class="opt__body">
+      <h2>Direction C</h2>
+      <p>Immersive. The page is a body of water and scrolling is descending through it — bright at the surface, dark where the science lives, back up into light to buy.</p>
+      <ul>
+        <li>The product stands in real, moving water</li>
+        <li>Surfaces behave like liquid, not glass</li>
+        <li>Touch the page and it ripples</li>
+      </ul>
+      <span class="opt__go">Open Direction C <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</main>
+
+<footer class="wrap">
+  <p class="note">
+    <b>Work in progress — not for publication.</b>
+    Customer reviews on all three pages are placeholder sample data and are labelled as such.
+    Pricing, the discount badge and the review count are still being finalised and should not
+    be read as final. Cart and checkout are not connected yet.
+  </p>
+</footer>
+
+</body>
+</html>

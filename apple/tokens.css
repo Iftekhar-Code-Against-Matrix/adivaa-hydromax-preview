@@ -1,0 +1,232 @@
+/* ============================================================
+   CURRENT — Adivaa HydroMax design language
+   Light theme. Brand anchor #0E7897.
+   Single source of truth. Nothing in the product hardcodes a
+   value that lives in this file.
+
+   v2 — Apple pass. What changed and why:
+     · tracking is now a CURVE across the whole scale, not one
+       value bolted onto the display sizes
+     · leading tracks size inversely, all the way down
+     · section rhythm opened ~45%; the content column narrowed,
+       so the page reads as content floating in space
+     · deep panels went cooler and much deeper — a near-black
+       canvas makes one bright accent do far more work
+     · materials (translucency) and spring motion are now tokens
+   Brand faces and #0E7897 are unchanged.
+   ============================================================ */
+
+/* Fonts are loaded via <link> in the document head, not @import — an @import
+   chain resolves serially and blocks first paint.
+
+   ⚠ The Fontshare API silently drops every family after the first when you
+   combine them in one request: a combined `f[]=general-sans&f[]=satoshi` URL
+   returns General Sans only, so Satoshi falls back to system-ui on any machine
+   that doesn't happen to have it installed locally. ONE REQUEST PER FAMILY. */
+
+:root {
+  /* ---------- 1. INK — text + structure ----------
+     Never pure black. Every neutral is tinted toward the brand hue,
+     so the page reads "cool water" even where there is no blue. */
+  --ink-900: #06222C;   /* headlines, primary text */
+  --ink-700: #133A47;   /* sub-headlines */
+  --ink-500: #4A6B76;   /* body copy, secondary */
+  --ink-300: #8AA3AC;   /* captions, meta, disabled */
+  --line:    #DCE7EB;   /* hairlines, card borders */
+  --line-strong: #C3D6DD;
+
+  /* ---------- 2. PAPER — surfaces ---------- */
+  --paper:      #FFFFFF;
+  --paper-tint: #F4F8FA;   /* lifted a touch: more air between tint and paper
+                              than contrast, so section changes read as breath */
+  --paper-blue: #EAF4F8;
+  /* Product plate. This is sampled from hero-studio.jpg's OWN backdrop, so a
+     contained render sits on it with no visible rectangle. Do not "improve"
+     it to a brand tint — the seam comes straight back. */
+  --plate:      #F5F5F5;
+
+  /* ---------- 3. BRAND BLUE — one hue, seven steps ---------- */
+  --blue-950: #02141A;   /* deepest ground — footer, final CTA */
+  --blue-900: #041B23;   /* deep sections. Was #05323F: pushing it to a cooler
+                            near-black is what lets white type and one aqua
+                            accent carry a whole section without shouting. */
+  --blue-800: #0A3D4C;   /* cards on deep */
+  --blue-700: #0A5C75;   /* hover / pressed on brand fills */
+  --blue-600: #0E7897;   /* ★ BRAND — CTAs, links, active, units */
+  --blue-400: #4BA6C0;   /* illustration, secondary graphics */
+  --blue-200: #A9D5E2;   /* dividers on blue, meter tracks */
+  --blue-50:  #EAF4F8;
+
+  /* ---------- 4. SPARKS — strict jobs, tiny doses ----------
+     AQUA  = "hydrogen is active". GRAPHICS ONLY (fails contrast as text).
+     AMBER = "earned proof".      GRAPHICS ONLY. Max ~2% of a viewport. */
+  --aqua:      #00C8C0;
+  --aqua-soft: rgba(0, 200, 192, .14);
+  --aqua-ink:  #05605C;   /* the only legible text form of aqua */
+  --amber:     #FFB43D;
+  --amber-soft:rgba(255, 180, 61, .16);
+  --amber-ink: #7A5410;   /* the only legible text form of amber */
+
+  /* Semantic — functional UI only, never decorative */
+  --positive: #12876B;
+  --negative: #C0392F;
+
+  /* ---------- 5. TYPE ---------- */
+  --font-display: 'General Sans', 'Outfit', 'Avenir Next', system-ui, sans-serif;
+  --font-text:    'Satoshi', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-data:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Fluid scale. */
+  --t-d0: clamp(3.5rem, 10vw, 8.5rem);      /* statement banner */
+  --t-d1: clamp(3rem, 8.2vw, 6.75rem);      /* hero */
+  --t-d2: clamp(2.125rem, 4.6vw, 3.875rem); /* section head */
+  --t-d3: clamp(1.625rem, 3vw, 2.5rem);     /* sub head */
+  --t-h4: clamp(1.1875rem, 1.5vw, 1.375rem);/* card title */
+  --t-lead: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  --t-body: 1rem;
+  --t-sm:   0.875rem;
+  --t-xs:   0.8125rem;
+  --t-label: 0.6875rem;                     /* mono caps */
+
+  /* ---------- 5a. TRACKING — a curve, not a value ----------
+     Letters read too far apart as type grows and too close as it shrinks,
+     so tracking has to be size-specific. One fixed letter-spacing is
+     always wrong somewhere. Negative through the display sizes, crossing
+     zero around body, positive in the small sizes where legibility needs
+     the air. This crossover is the single biggest reason a page reads
+     "designed" rather than "set". */
+  --ls-d0:    -0.045em;   /* 56–136px */
+  --ls-d1:    -0.038em;   /* 48–108px */
+  --ls-d2:    -0.032em;   /* 34–62px  */
+  --ls-d3:    -0.026em;   /* 26–40px  */
+  --ls-h4:    -0.019em;   /* 19–22px  */
+  --ls-lead:  -0.013em;   /* 17–19px  */
+  --ls-body:  -0.008em;   /* 16px     */
+  --ls-sm:    -0.003em;   /* 14px     */
+  --ls-xs:     0.002em;   /* 13px  ← crossover */
+  --ls-micro:  0.010em;   /* 11px     */
+  --ls-label:  0.14em;    /* mono caps */
+
+  /* ---------- 5b. LEADING — inverse to size ----------
+     Tight on large type, looser as it gets smaller. */
+  --lh-statement: 0.86;
+  --lh-tight: 0.92;   /* d1 */
+  --lh-head:  1.02;   /* d2 */
+  --lh-d3:    1.06;
+  --lh-h4:    1.18;
+  --lh-lead:  1.45;
+  --lh-body:  1.55;
+  --lh-sm:    1.6;
+
+  /* ---------- 6. SPACE — 4px base ---------- */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 24px;  --s-6: 32px;  --s-7: 48px;  --s-8: 64px;
+  --s-9: 96px;  --s-10: 128px; --s-11: 160px;
+
+  /* Opened ~45%. Air is the cheapest way to make a page feel expensive,
+     and it is what gives one idea per screen room to actually land. */
+  --section-y: clamp(112px, 13vw, 232px);
+  --gutter:    clamp(22px, 5vw, 72px);
+  /* Narrowed from 1240. Content floating in space reads calmer and more
+     deliberate than content filling the window edge to edge. */
+  --measure:   1140px;
+  --shell:     1400px;
+  --inset:     clamp(12px, 1.4vw, 20px);
+
+  /* ---------- 7. RADIUS ---------- */
+  --r-sm:   14px;
+  --r-md:   22px;
+  --r-lg:   34px;
+  --r-xl:   46px;   /* full-bleed panels */
+  --r-pill: 999px;
+
+  /* ---------- 8. ELEVATION ----------
+     Cards prefer TINT + HAIRLINE over shadow. Where a shadow is used it
+     is wide and faint — a big surface reads as thicker via a deeper,
+     softer shadow, not a darker one. */
+  --shadow-card:  0 1px 2px rgba(6,34,44,.03), 0 12px 32px -14px rgba(6,34,44,.10);
+  --shadow-lift:  0 2px 6px rgba(6,34,44,.05), 0 30px 70px -24px rgba(14,120,151,.30);
+  --shadow-glass: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 2px rgba(6,34,44,.04), 0 16px 48px -20px rgba(6,34,44,.22);
+  --shadow-float: 0 4px 12px -4px rgba(6,34,44,.08), 0 40px 90px -30px rgba(6,34,44,.28);
+  --glow-aqua:    0 0 0 1px rgba(0,200,192,.35), 0 0 40px rgba(0,200,192,.22);
+  --focus-ring:   0 0 0 3px rgba(14,120,151,.30);
+
+  /* ---------- 9. MATERIALS — translucency as hierarchy ----------
+     Chrome is a floating layer with content scrolling underneath, not an
+     opaque strip that eats a band of the viewport. Weight encodes rank:
+     thin for small chips, thick for structural regions. A bigger surface
+     reads as thicker — stronger blur, deeper shadow.
+     Never stack a light translucent surface on another one. */
+  --mat-thin:     rgba(255,255,255,.55);
+  --mat-regular:  rgba(255,255,255,.72);
+  --mat-thick:    rgba(255,255,255,.86);
+  --mat-deep:     rgba(4,27,35,.62);
+  --mat-deep-thick: rgba(4,27,35,.82);
+
+  --mat-blur-sm: saturate(180%) blur(12px);
+  --mat-blur-md: saturate(180%) blur(24px);
+  --mat-blur-lg: saturate(190%) blur(40px);
+
+  /* the bright top edge is light catching the leading face of the material */
+  --mat-edge:      rgba(255,255,255,.65);
+  --mat-edge-deep: rgba(255,255,255,.12);
+  --mat-hairline:  rgba(6,34,44,.08);
+
+  /* ---------- 10. MOTION ----------
+     These linear() curves are SAMPLED FROM THE SAME analytic spring that
+     motion.js runs, so a CSS transition and a JS spring on the same
+     component describe the same physics. Regenerate both together if you
+     ever change damping/response.
+
+     damping 1.0 = critically damped, no overshoot — the default for
+     anything that merely appeared. Bounce (damping .8) is reserved for
+     motion a gesture already put momentum into. */
+  --spring-ui:    linear(0, 0.0218 4.2%, 0.0754 8.3%, 0.1472 12.5%, 0.2275 16.7%, 0.3101 20.8%, 0.3908 25%, 0.467 29.2%, 0.5372 33.3%, 0.6007 37.5%, 0.6575 41.7%, 0.7075 45.8%, 0.7513 50%, 0.7894 54.2%, 0.8222 58.3%, 0.8503 62.5%, 0.8743 66.7%, 0.8947 70.8%, 0.912 75%, 0.9266 79.2%, 0.9389 83.3%, 0.9492 87.5%, 0.9579 91.7%, 0.9651 95.8%, 1);
+  --spring-bounce:linear(0, 0.034 4.2%, 0.1168 8.3%, 0.2255 12.5%, 0.3438 16.7%, 0.4608 20.8%, 0.5695 25%, 0.6661 29.2%, 0.7488 33.3%, 0.8174 37.5%, 0.8727 41.7%, 0.916 45.8%, 0.949 50%, 0.9732 54.2%, 0.9903 58.3%, 1.0019 62.5%, 1.0091 66.7%, 1.0132 70.8%, 1.0149 75%, 1.0151 79.2%, 1.0142 83.3%, 1.0128 87.5%, 1.0111 91.7%, 1.0093 95.8%, 1);
+
+  --dur-spring: 301ms;   /* damping 1.0, response 0.35 */
+  --dur-move:   344ms;   /* damping 1.0, response 0.40 */
+  --dur-bounce: 430ms;   /* damping 0.8, response 0.40 */
+  --dur-sheet:  322ms;   /* damping 0.8, response 0.30 */
+
+  /* Press feedback lives on pointer-down and must be effectively instant —
+     anything above ~120ms and directness "falls off a cliff". */
+  --dur-press:  90ms;
+
+  /* Non-spring easings, kept for entrances and long ambient motion where a
+     spring has nothing to be interruptible about. */
+  --ease-entrance: cubic-bezier(.22, 1, .36, 1);
+  --ease-ui:       cubic-bezier(.4, 0, .2, 1);
+  --ease-water:    cubic-bezier(.65, 0, .35, 1);
+  --dur-entrance: 700ms;
+  --dur-ui: 240ms;
+  --dur-water: 1200ms;
+  --stagger: 70ms;
+}
+
+/* ---------- accessibility variants of the material ----------
+   Reduced transparency does not mean "remove the layer" — it means make
+   the same layer frostier and solid, so hierarchy survives. */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --mat-thin: rgba(255,255,255,.97);
+    --mat-regular: #fff;
+    --mat-thick: #fff;
+    --mat-deep: #041B23;
+    --mat-deep-thick: #041B23;
+    --mat-blur-sm: none; --mat-blur-md: none; --mat-blur-lg: none;
+  }
+}
+@media (prefers-contrast: more) {
+  :root {
+    --mat-thin: #fff; --mat-regular: #fff; --mat-thick: #fff;
+    --mat-deep: #02141A; --mat-deep-thick: #02141A;
+    --mat-blur-sm: none; --mat-blur-md: none; --mat-blur-lg: none;
+    --mat-hairline: rgba(6,34,44,.55);
+    --mat-edge: rgba(6,34,44,.55);
+    --line: #7E9AA4;
+    --line-strong: #4A6B76;
+    --ink-500: #29505C;
+    --ink-300: #4A6B76;
+  }
+}
