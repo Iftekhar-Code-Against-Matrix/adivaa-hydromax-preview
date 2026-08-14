@@ -73,11 +73,9 @@ ul { padding: 0; list-style: none; }
 .label::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%; flex: 0 0 auto;
   background: var(--aqua); box-shadow: 0 0 0 3px var(--aqua-soft);
-  animation: pulse 2.4s var(--ease-ui) infinite;
 }
 .label--plain::before { display: none; }
 .section--deep .label { color: var(--blue-200); }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.45;transform:scale(.78)} }
 
 /* Section head. The label sits well clear of the headline and the lead
    well clear of that — three separated beats, not a stack. */
@@ -461,8 +459,6 @@ ul { padding: 0; list-style: none; }
   background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.95), var(--aqua-soft) 60%, transparent 72%);
   border: 1px solid rgba(0,200,192,.26); animation: rise linear infinite;
 }
-@keyframes rise {
-  0%   { transform: translateY(0) translateX(0) scale(.7); opacity: 0; }
   12%  { opacity: .5; } 80% { opacity: .32; }
   100% { transform: translateY(-115vh) translateX(var(--dx,14px)) scale(1); opacity: 0; }
 }
@@ -475,14 +471,7 @@ ul { padding: 0; list-style: none; }
 }
 .marquee__viewport { overflow: hidden; position: relative; }
 /* fade the ends so items enter and leave instead of being cut off mid-glyph */
-.marquee__viewport::before, .marquee__viewport::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: clamp(32px, 6vw, 96px); z-index: 2; pointer-events: none;
-}
-.marquee__viewport::before { left: 0;  background: linear-gradient(to right, var(--paper-tint), transparent); }
-.marquee__viewport::after  { right: 0; background: linear-gradient(to left,  var(--paper-tint), transparent); }
-.marquee__track { display: flex; align-items: center; gap: clamp(32px, 4vw, 64px); width: max-content; animation: slide 44s linear infinite; }
-.marquee:hover .marquee__track { animation-play-state: paused; }
-@keyframes slide { to { transform: translateX(-50%); } }
+.marquee__track { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: clamp(32px, 4vw, 64px); width: max-content;  }
 
 /* One treatment for every mark, image or type, so a mixed set reads as one system.
    Real logos are monochromed to ink — full-colour seals (a navy CE badge, a green
@@ -538,7 +527,7 @@ ul { padding: 0; list-style: none; }
 .section--deep .stat__cap, .on-deep .stat__cap { color: rgba(255,255,255,.66); }
 
 .meter { height: 8px; border-radius: var(--r-pill); background: var(--blue-200); overflow: hidden; margin-top: var(--s-4); }
-.meter i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--blue-600), var(--aqua)); transition: width var(--dur-water) var(--ease-water); }
+.meter i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--blue-600), var(--aqua)); }
 .section--deep .meter, .on-deep .meter { background: rgba(255,255,255,.16); }
 
 /* ---------------- split (image + copy) ---------------- */
@@ -608,8 +597,7 @@ ul { padding: 0; list-style: none; }
 .bar__name { font-size: .9375rem; font-weight: 600; color: var(--ink-700); }
 .bar__val { font-family: var(--font-data); font-size: .9375rem; font-weight: 600; color: var(--ink-500); font-variant-numeric: tabular-nums; }
 .bar__track { height: 14px; border-radius: var(--r-pill); background: var(--paper-tint); border: 1px solid var(--line); overflow: hidden; }
-.bar__fill { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--ink-300);
-  transition: width 1400ms var(--ease-water); }
+.bar__fill { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--ink-300); }
 .bar.is-hero .bar__name, .bar.is-hero .bar__val { color: var(--ink-900); }
 .bar.is-hero .bar__track { border-color: transparent; background: var(--blue-50); }
 .bar.is-hero .bar__fill { background: linear-gradient(90deg, var(--blue-600), var(--aqua)); }
@@ -885,7 +873,7 @@ ul { padding: 0; list-style: none; }
    feedback" — you still reach everything, and it keyboard-scrolls, which a
    transform-driven rail does not. */
 .rail.is-native { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
-.rail.is-native .rail__track { transform: none !important; cursor: auto; width: max-content; }
+.rail.is-native .rail__track { transform: none !important; cursor: auto; width: 100%; }
 .rail.is-native .rail__item { scroll-snap-align: start; }
 .rail__item { flex: 0 0 auto; width: clamp(264px, 30vw, 400px); }
 .rail__item > .frame { aspect-ratio: 3 / 4; }
@@ -933,12 +921,10 @@ ul { padding: 0; list-style: none; }
    (--spring-ui is sampled from the engine in motion.js), and no
    overshoot, because nothing put momentum into it.
    ============================================================ */
-[data-reveal] { opacity: 0; transform: translate3d(0, 22px, 0); }
+[data-reveal] { opacity: 0; }
 [data-reveal].in {
-  opacity: 1; transform: none;
-  transition: opacity var(--dur-entrance) var(--ease-entrance),
-              transform 620ms var(--spring-ui);
-  transition-delay: var(--d, 0ms);
+  opacity: 1;
+  transition: opacity 420ms var(--ease-ambient, ease);
 }
 
 /* ============================================================
@@ -954,7 +940,7 @@ ul { padding: 0; list-style: none; }
   }
   .bubbles { display: none; }
   /* cross-fade in place, no slide */
-  [data-reveal] { transform: none !important; }
+  [data-reveal] { opacity: 0; }
   /* the marquee is a slow continuous loop — exactly the kind of ambient
      motion to drop. The global rule above would otherwise fast-forward it
      to translateX(-50%) and leave the strip parked off-centre. */

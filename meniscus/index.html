@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HydroMax 300 ml — Hydrogen Water Bottle | Adivaa</title>
 <meta name="description" content="Up to 9,000 PPB molecular hydrogen in 18 minutes. DuPont PEM + SPE electrolysis, drink · mist · inhale. ₹15,999 with 365-day replacement.">
-<meta name="theme-color" content="#0E7897">
+<meta name="theme-color" content="#0D0B0A">
 <meta property="og:type" content="product">
 <meta property="og:title" content="HydroMax 300 ml — Hydrogen Water Bottle | Adivaa">
 <meta property="og:description" content="Up to 9,000 PPB molecular hydrogen in 18 minutes. DuPont PEM + SPE electrolysis, drink · mist · inhale.">
@@ -14,13 +14,17 @@
 
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- One request per family — Fontshare drops every family after the first. -->
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap">
+<!-- One request per family — Fontshare drops every family after the first.
+     Meniscus is a TWO-FACE system: Satoshi carries everything, Instrument
+     Serif Italic is the single accent. No monospace anywhere — the
+     instrument label carries the technical register instead, which is why
+     JetBrains Mono is gone. Satoshi ships 400/500/700 (no 600), so the
+     ladder is a clean two-weight system: 500 medium, 700 display. -->
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="styles.css">
-<link rel="preload" as="image" href="assets/hero-studio.jpg">
+<link rel="preload" as="image" href="assets/hero-render.webp" type="image/webp">
 
 <script type="application/ld+json">
 {
@@ -36,6 +40,26 @@
 <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}.hero__media::after{display:none}</style></noscript>
 </head>
 <body>
+
+<!-- ══════════════ THE MATERIAL ══════════════
+     This is what separates Meniscus from glassmorphism. A frosted blur
+     DESTROYS what is behind a surface; a displacement map BENDS it, so
+     content passing under a panel stays readable while visibly moving
+     through a liquid boundary.
+
+     `scale` is the whole calibration. 1–2 is invisible, 8 mangles type;
+     4 lands the ~2px of visible travel the language calls for and is
+     the readable limit over body copy. Measured, not guessed.
+     Verified refracting the live backdrop in Chrome 148. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="mn-refract" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <!-- anisotropic: fast horizontal ripple over slow vertical drift, so
+         it reads as water rather than as generic noise -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.011 0.03" numOctaves="2" seed="4" result="n"/>
+    <feGaussianBlur in="n" stdDeviation="1.4" result="ns"/>
+    <feDisplacementMap in="SourceGraphic" in2="ns" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>
 
 <!-- ===== ICONS ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -95,110 +119,148 @@
 
 <main id="top">
 
-<!-- ══════════════ 01 · HERO — session 2 · paper ══════════════ -->
-<section class="section hero">
-  <div class="wrap wrap--wide hero__grid">
-    <div class="hero__copy">
-      <p class="label" data-reveal>HydroMax · 300 ml</p>
-      <h1 class="d1" data-reveal >Charged water,<br>in <span class="hi">three minutes</span>.</h1>
-      <p class="lead" data-reveal style="max-width:46ch">
-        A 6th-gen DuPont PEM cell inside a 300 ml bottle. Tap, RO, filtered or mineral —
-        it dissolves up to <b>9,000 PPB</b> of molecular hydrogen and drives ORP down to <b>−450 mV</b>.
-      </p>
+<!-- ══════════════ 01 · HERO — statement, then the product ══════════════
+     One idea per screen. The hero states what it is and what it costs;
+     everything you configure lives in §01b, which does that job properly
+     with a running order summary. -->
+<section class="section hero section--lit" id="hero">
+  <div class="wrap hero__intro">
+    <p class="label" data-reveal>HydroMax · 300 ml</p>
+    <h1 class="d1" data-reveal >Charged water,<br>in <span class="hi">three minutes</span>.</h1>
+    <p class="lead" data-reveal >
+      A 6th-gen DuPont PEM cell inside a 300 ml bottle. Tap, RO, filtered or mineral —
+      it dissolves up to <b>9,000 PPB</b> of molecular hydrogen and drives ORP down to <b>−450 mV</b>.
+    </p>
 
-      <div class="hero__rating" data-reveal >
+    <div class="hero__meta" data-reveal >
+      <span class="hero__rating">
         <span class="stars" aria-hidden="true">
           <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
         </span>
         <!-- PLACEHOLDER: wire to the live review feed before publishing -->
         <span class="body-sm" data-review-summary>4.6 out of 5 · <b>31 verified</b></span>
-      </div>
-
-      <div class="hero__price" data-reveal >
+      </span>
+      <span class="hero__meta__sep" aria-hidden="true"></span>
+      <span class="hero__price">
         <b>₹15,999</b><s class="mono">₹19,499</s><span class="chip chip--aqua">Save ₹3,500</span>
-      </div>
-      <p class="body-xs" data-reveal >MRP inclusive of all taxes · No-cost EMI from <b>₹1,346/month</b></p>
-
-      <!-- quantity -->
-      <div class="qty" data-reveal >
-        <span class="qty__label">Quantity</span>
-        <div class="stepper" data-qty>
-          <button type="button" data-step="-1" aria-label="Decrease quantity">−</button>
-          <output data-qty-value aria-live="polite">1</output>
-          <button type="button" data-step="1" aria-label="Increase quantity">+</button>
-        </div>
-      </div>
-
-      <!-- accidental care plan -->
-      <div class="plan" data-reveal >
-        <div class="plan__top">
-          <div>
-            <p class="plan__title">Add Adivaa Smart Accidental Care Plan</p>
-            <p class="plan__sub">Covers accidental damage to your bottle</p>
-          </div>
-          <span class="plan__by"><span>Powered by</span><img src="assets/protega.png" alt="Protega" width="1196" height="271"></span>
-        </div>
-        <div class="plan__opts" role="radiogroup" aria-label="Accidental care plan">
-          <label class="plan__opt">
-            <input type="radio" name="careplan" value="0" data-plan="0" checked>
-            <span><b>No plan</b><small>—</small></span>
-          </label>
-          <label class="plan__opt">
-            <input type="radio" name="careplan" value="749" data-plan="749">
-            <span><b>1 year protection</b><small>+₹749</small></span>
-          </label>
-          <label class="plan__opt">
-            <input type="radio" name="careplan" value="1099" data-plan="1099">
-            <span><b>2 year protection</b><small>+₹1,099</small></span>
-          </label>
-        </div>
-      </div>
-
-      <!-- CTAs -->
-      <div class="hero__ctas" data-reveal >
-        <a href="#buy" class="btn btn--primary btn--lg">Buy now — <span data-total>₹15,999</span> <svg class="arw"><use href="#i-arrow"/></svg></a>
-        <div class="hero__ctas__row">
-          <a href="#buy" class="btn btn--ghost">Book a demo</a>
-          <a href="#science" class="btn btn--ghost">How it works</a>
-        </div>
-      </div>
-
-      <!-- free gift -->
-      <div class="gift" data-reveal >
-        <span class="gift__ico"><svg><use href="#i-gift"/></svg></span>
-        <div>
-          <b>Free with this order</b>
-          <small>Hydrogen face-mist sprayer — worth ₹1,999</small>
-        </div>
-      </div>
-
-      <!-- whatsapp -->
-      <p class="wa" data-reveal >
-        <svg><use href="#i-wa"/></svg>
-        To know more about HydroMax,
-        <a href="https://wa.me/919821551009" target="_blank" rel="noopener">chat with our team <span aria-hidden="true">→</span></a>
-      </p>
-
-      <div class="hero__micro" data-reveal >
-        <div><svg><use href="#i-shield"/></svg> 365-day replacement</div>
-        <div><svg><use href="#i-refresh"/></svg> 30-day returns</div>
-        <div><svg><use href="#i-ship"/></svg> Free shipping</div>
-        <div><svg><use href="#i-cert"/></svg> FDA · GMP · CE</div>
-      </div>
+      </span>
     </div>
 
-    <!-- session 1's true-alpha render, floated on session 2's gradient panel -->
-    <div class="hero__media hero__media--render hero__media--photo">
+    <div class="hero__cta" data-reveal >
+      <a href="#configure" class="btn btn--primary btn--lg">Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
+      <a href="#science" class="btn btn--ghost btn--lg">How it works</a>
+    </div>
+  </div>
+
+  <!-- LAW 5 · the product stands in water.
+       The pool is a real Gerstner field on one canvas, not a picture of
+       one — see water.js. It pauses off-screen and holds a static frame
+       under reduced motion. The plate's ratio matches the render's so
+       there is no letterbox seam at any size. -->
+  <div class="hero__stage">
+    <div class="hero__pool" data-water aria-hidden="true"></div>
+    <div class="hero__plate" data-hero-plate>
       <picture>
-        <img src="assets/hero-studio.jpg" alt="Adivaa HydroMax 300 ml hydrogen water bottle, matte black with a lit blue indicator ring and vented base" width="1122" height="1402" fetchpriority="high">
+        <source srcset="assets/hero-render.webp" type="image/webp">
+        <img src="assets/hero-render.png" alt="Adivaa HydroMax 300 ml hydrogen water bottle, matte black with a lit blue indicator ring and vented base" width="650" height="1200" fetchpriority="high">
       </picture>
       <!-- the floating stat card already carries 9,000 PPB — the sticker earns its
            place only if it adds something, so it carries the offer instead -->
-      <div class="hero__sticker"><span class="sticker"><b>−17%</b><span>Launch offer</span></span></div>
-      <div class="hero__stat">
-        <div class="num">9,000 <small>PPB</small></div>
-        <div class="cap">Deep infusion · 18 min</div>
+    </div>
+    <div class="hero__sticker"><span class="sticker"><b>−17%</b><span>Launch offer</span></span></div>
+    <div class="hero__stat">
+      <div class="num">9,000 <small>PPB</small></div>
+      <div class="cap">Deep infusion · 18 min</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 01b · CONFIGURE — the buy block ══════════════
+     Each control sits with the thing it changes, and the summary
+     updates as you work rather than only at the end. -->
+<section class="section section--tint" id="configure">
+  <div class="wrap">
+    <div class="shead shead--center">
+      <p class="label" data-reveal>Configure</p>
+      <h2 class="d2" data-reveal >Make it yours.</h2>
+    </div>
+
+    <div class="config">
+      <div class="config__opts">
+        <div class="opt" data-reveal>
+          <div class="opt__head">
+            <div>
+              <h3 class="h4">Quantity</h3>
+              <p class="body-sm">Up to nine bottles per order.</p>
+            </div>
+            <div class="stepper" data-qty>
+              <button type="button" data-step="-1" aria-label="Decrease quantity">−</button>
+              <output data-qty-value aria-live="polite">1</output>
+              <button type="button" data-step="1" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="opt" data-reveal >
+          <div class="opt__head">
+            <div>
+              <h3 class="h4">Accidental care plan</h3>
+              <p class="body-sm">Covers accidental damage to your bottle. Optional, priced per bottle.</p>
+            </div>
+            <span class="plan__by"><span>Powered by</span><img src="assets/protega.png" alt="Protega" width="1196" height="271"></span>
+          </div>
+          <div class="plan__opts" role="radiogroup" aria-label="Accidental care plan">
+            <label class="plan__opt">
+              <input type="radio" name="careplan" value="0" data-plan="0" checked>
+              <span><b>No plan</b><small>—</small></span>
+            </label>
+            <label class="plan__opt">
+              <input type="radio" name="careplan" value="749" data-plan="749">
+              <span><b>1 year protection</b><small>+₹749</small></span>
+            </label>
+            <label class="plan__opt">
+              <input type="radio" name="careplan" value="1099" data-plan="1099">
+              <span><b>2 year protection</b><small>+₹1,099</small></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="gift" data-reveal >
+          <span class="gift__ico"><svg><use href="#i-gift"/></svg></span>
+          <div>
+            <b>Free with this order</b>
+            <small>Hydrogen face-mist sprayer — worth ₹1,999</small>
+          </div>
+        </div>
+
+        <p class="wa" data-reveal >
+          <svg><use href="#i-wa"/></svg>
+          To know more about HydroMax,
+          <a href="https://wa.me/919821551009" target="_blank" rel="noopener">chat with our team <span aria-hidden="true">→</span></a>
+        </p>
       </div>
+
+      <aside class="config__summary" data-reveal >
+        <div class="summary">
+          <p class="label label--plain">Your order</p>
+          <div class="summary__rows">
+            <div><span>HydroMax 300 ml × <span data-sum-qty>1</span></span><b data-sum-unit>₹15,999</b></div>
+            <div data-sum-plan-row hidden><span>Accidental care plan × <span data-sum-plan-qty>1</span></span><b data-sum-plan>₹0</b></div>
+            <div><span>Hydrogen face-mist sprayer</span><b class="is-free">Free</b></div>
+            <div><span>Shipping, pan-India</span><b class="is-free">Free</b></div>
+          </div>
+          <div class="summary__total"><span>Total</span><b data-total>₹15,999</b></div>
+          <a href="#buy" class="btn btn--primary btn--lg">Buy now <svg class="arw"><use href="#i-arrow"/></svg></a>
+          <a href="#buy" class="btn btn--ghost btn--sm" style="width:100%;margin-top:var(--s-3)">Book a demo</a>
+          <p class="summary__emi">MRP inclusive of all taxes · No-cost EMI from ₹1,346/month</p>
+          <div class="hero__micro">
+            <div><svg><use href="#i-shield"/></svg> 365-day replacement</div>
+            <div><svg><use href="#i-refresh"/></svg> 30-day returns</div>
+            <div><svg><use href="#i-ship"/></svg> Free shipping</div>
+            <div><svg><use href="#i-cert"/></svg> FDA · GMP · CE</div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -532,37 +594,55 @@
   </div>
 </section>
 
-<!-- ══════════════ 10 · THREE MODES — session 2 · paper ══════════════ -->
+<!-- ══════════════ 10 · THREE MODES — draggable gallery ══════════════ -->
 <section class="section" id="modes">
   <div class="wrap">
-    <div class="shead">
-      <p class="label" data-reveal>05 — Three modes</p>
-      <h2 class="d2" data-reveal >Drink it. Mist it. Breathe it.</h2>
-      <p class="lead" data-reveal >One device, three deliveries. The nano-mist sprayer and the inhalation adapter are both in the box — no upsell, no second purchase.</p>
+    <div class="railhead">
+      <div class="shead">
+        <p class="label" data-reveal>05 — Three modes</p>
+        <h2 class="d2" data-reveal >Drink it. Mist it. Breathe it.</h2>
+        <p class="lead" data-reveal >One device, three deliveries. The nano-mist sprayer and the inhalation adapter are both in the box — no upsell, no second purchase.</p>
+      </div>
+      <div class="rail__nav" data-reveal >
+        <button type="button" data-rail-prev aria-label="Previous mode"><svg><use href="#i-arrow"/></svg></button>
+        <button type="button" data-rail-next aria-label="Next mode"><svg><use href="#i-arrow"/></svg></button>
+      </div>
     </div>
   </div>
-  <div class="wrap wrap--wide mt-8">
-    <div class="mosaic" data-reveal>
-      <div class="mosaic__copy">
-        <p class="body-sm">Most people settle into one. The 3-minute boost before a ride, the mist after a long day at a screen, the adapter on the nights sleep matters more than usual.</p>
-        <a href="#buy" class="btn btn--ghost btn--sm mt-5">Get all three <svg class="arw"><use href="#i-arrow"/></svg></a>
-      </div>
-      <figure class="frame frame--scrim" style="min-height:420px">
-        <img src="assets/cyclist-drink.jpg" alt="Cyclist drinking hydrogen water from the HydroMax bottle" loading="lazy">
-        <div class="frame__cap"><b>Drink</b><small>300 ml · up to 9,000 PPB</small></div>
-        <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 01</figcaption>
-      </figure>
-      <div class="mosaic__col">
-        <figure class="frame frame--scrim">
-          <img src="assets/mode-mist.jpg" alt="Hydrogen nano-mist being sprayed on the face" loading="lazy">
-          <div class="frame__cap"><b>Mist</b><small>Nano-mist sprayer, included</small></div>
-          <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 02</figcaption>
-        </figure>
-        <figure class="frame frame--scrim">
-          <img src="assets/mode-inhale.jpg" alt="Hydrogen gas rising from the base for inhalation" loading="lazy">
-          <div class="frame__cap"><b>Breathe</b><small>Inhalation adapter, included</small></div>
-          <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 03</figcaption>
-        </figure>
+  <div class="wrap wrap--wide" style="margin-top:clamp(48px,6vw,96px)">
+    <div class="rail" data-rail data-reveal>
+      <div class="rail__track" data-rail-track>
+        <article class="rail__item">
+          <figure class="frame frame--scrim">
+            <img src="assets/cyclist-drink.jpg" alt="Cyclist drinking hydrogen water from the HydroMax bottle" loading="lazy">
+            <div class="frame__cap"><b>Drink</b><small>300 ml · up to 9,000 PPB</small></div>
+            <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 01</figcaption>
+          </figure>
+          <p class="body-sm mt-5">The 3-minute boost before a ride. Refill from whatever's nearest and press once.</p>
+        </article>
+        <article class="rail__item">
+          <figure class="frame frame--scrim">
+            <img src="assets/mode-mist.jpg" alt="Hydrogen nano-mist being sprayed on the face" loading="lazy">
+            <div class="frame__cap"><b>Mist</b><small>Nano-mist sprayer, included</small></div>
+            <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 02</figcaption>
+          </figure>
+          <p class="body-sm mt-5">The one people reach for after a long day at a screen. Sprayer is in the box.</p>
+        </article>
+        <article class="rail__item">
+          <figure class="frame frame--scrim">
+            <img src="assets/mode-inhale.jpg" alt="Hydrogen gas rising from the base for inhalation" loading="lazy">
+            <div class="frame__cap"><b>Breathe</b><small>Inhalation adapter, included</small></div>
+            <figcaption style="left:auto;right:var(--s-4);top:var(--s-4);bottom:auto">Mode 03</figcaption>
+          </figure>
+          <p class="body-sm mt-5">The adapter, on the nights sleep matters more than usual. Also in the box.</p>
+        </article>
+        <article class="rail__item">
+          <div class="card card--fill" style="height:100%;display:flex;flex-direction:column;justify-content:center">
+            <h3 class="h4">Most people settle into one.</h3>
+            <p class="body-sm">You don't have to choose up front — the sprayer and the adapter both ship with the bottle, so trying all three costs nothing extra.</p>
+            <a href="#configure" class="btn btn--ghost btn--sm mt-5" style="align-self:flex-start">Get all three <svg class="arw"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -571,30 +651,40 @@
 <!-- ══════════════ 11 · IN PRACTICE — session 2 · tint ══════════════ -->
 <section class="section section--tint" id="day">
   <div class="wrap">
-    <div class="shead">
-      <p class="label" data-reveal>06 — In practice</p>
-      <h2 class="d2" data-reveal >A day with it.</h2>
-      <p class="lead" data-reveal >Three minutes is the cycle people actually use. Eighteen is for the morning you planned ahead.</p>
+    <div class="railhead">
+      <div class="shead">
+        <p class="label" data-reveal>06 — In practice</p>
+        <h2 class="d2" data-reveal >A day with it.</h2>
+        <p class="lead" data-reveal >Three minutes is the cycle people actually use. Eighteen is for the morning you planned ahead.</p>
+      </div>
+      <div class="rail__nav" data-reveal >
+        <button type="button" data-rail-prev aria-label="Previous moment"><svg><use href="#i-arrow"/></svg></button>
+        <button type="button" data-rail-next aria-label="Next moment"><svg><use href="#i-arrow"/></svg></button>
+      </div>
     </div>
-    <div class="tl mt-8">
-      <article class="tl__item" data-reveal>
-        <figure class="frame"><img src="assets/day-morning.jpg" alt="Holding the HydroMax bottle outdoors in the morning" loading="lazy"></figure>
-        <span class="tl__time">06:40 · Morning</span>
-        <h3 class="h4">Deep infusion while you get ready</h3>
-        <p class="body-sm">Fill it, hold the button, leave it on the counter. Eighteen minutes later it's at full concentration and you haven't thought about it once.</p>
-      </article>
-      <article class="tl__item" data-reveal >
-        <figure class="frame"><img src="assets/desk-flatlay.jpg" alt="HydroMax bottle on a desk with coffee and a laptop" loading="lazy"></figure>
-        <span class="tl__time">14:15 · Midday</span>
-        <h3 class="h4">A 3-minute boost between calls</h3>
-        <p class="body-sm">Refill from whatever's nearest — the cooler, the tap, a bottle of mineral water. One press, 3,000 PPB, back to work.</p>
-      </article>
-      <article class="tl__item" data-reveal >
-        <figure class="frame"><img src="assets/day-evening-lamp.jpg" alt="HydroMax bottle charging on a bedside table beside a lamp" loading="lazy"></figure>
-        <span class="tl__time">22:10 · Night</span>
-        <h3 class="h4">Back on the nightstand</h3>
-        <p class="body-sm">Fifteen-plus cycles per charge means most people top it up twice a week — on the same USB-C cable as everything else on the table.</p>
-      </article>
+  </div>
+  <div class="wrap wrap--wide" style="margin-top:clamp(48px,6vw,96px)">
+    <div class="rail rail--wide" data-rail data-reveal>
+      <div class="rail__track" data-rail-track>
+        <article class="rail__item">
+          <figure class="frame"><img src="assets/day-morning.jpg" alt="Holding the HydroMax bottle outdoors in the morning" loading="lazy"></figure>
+          <span class="tl__time">06:40 · Morning</span>
+          <h3 class="h4">Deep infusion while you get ready</h3>
+          <p class="body-sm mt-3">Fill it, hold the button, leave it on the counter. Eighteen minutes later it's at full concentration and you haven't thought about it once.</p>
+        </article>
+        <article class="rail__item">
+          <figure class="frame"><img src="assets/desk-flatlay.jpg" alt="HydroMax bottle on a desk with coffee and a laptop" loading="lazy"></figure>
+          <span class="tl__time">14:15 · Midday</span>
+          <h3 class="h4">A 3-minute boost between calls</h3>
+          <p class="body-sm mt-3">Refill from whatever's nearest — the cooler, the tap, a bottle of mineral water. One press, 3,000 PPB, back to work.</p>
+        </article>
+        <article class="rail__item">
+          <figure class="frame"><img src="assets/day-evening-lamp.jpg" alt="HydroMax bottle charging on a bedside table beside a lamp" loading="lazy"></figure>
+          <span class="tl__time">22:10 · Night</span>
+          <h3 class="h4">Back on the nightstand</h3>
+          <p class="body-sm mt-3">Fifteen-plus cycles per charge means most people top it up twice a week — on the same USB-C cable as everything else on the table.</p>
+        </article>
+      </div>
     </div>
   </div>
 </section>
@@ -681,11 +771,11 @@
      Ratings, counts and quotes below are illustrative sample data, not real customer reviews. -->
 <section class="section section--blue" id="reviews" data-placeholder="reviews">
   <div class="wrap">
-    <div class="split" style="align-items:start">
-      <div>
+    <div class="railhead">
+      <div class="shead" style="max-width:520px">
         <p class="label" data-reveal>09 — Reviews</p>
-        <h2 class="d2 mt-4" data-reveal >What people say<br>after a month.</h2>
-        <div class="card mt-6" data-reveal >
+        <h2 class="d2" data-reveal >What people say<br>after a month.</h2>
+        <div class="card" data-reveal >
           <div style="display:flex;align-items:center;gap:var(--s-4)">
             <div>
               <div class="mono" style="font-size:2.75rem;font-weight:600;letter-spacing:-.03em;line-height:1">4.6</div>
@@ -702,25 +792,47 @@
           </div>
         </div>
       </div>
-      <div class="rvcols" data-reveal >
-        <div class="rv">
-          <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Bengaluru</span></div></div>
-            <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
-          <p>Placeholder review copy. Replace this entire section with the live review feed — do not publish sample testimonials as real ones.</p>
-          <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
-        </div>
-        <div class="rv">
-          <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Mumbai</span></div></div>
-            <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
-          <p>Placeholder review copy. The card design, column flow and verified badge are what's being demonstrated here.</p>
-          <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
-        </div>
-        <div class="rv">
-          <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Delhi</span></div></div>
-            <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
-          <p>Placeholder review copy. Masonry columns collapse to one below 1100px.</p>
-          <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
-        </div>
+      <div class="rail__nav" data-reveal >
+        <button type="button" data-rail-prev aria-label="Previous reviews"><svg><use href="#i-arrow"/></svg></button>
+        <button type="button" data-rail-next aria-label="More reviews"><svg><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap wrap--wide" style="margin-top:clamp(40px,5vw,72px)">
+    <div class="rail rail--cards" data-rail data-reveal>
+      <div class="rail__track" data-rail-track>
+        <article class="rail__item">
+          <div class="rv">
+            <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Bengaluru</span></div></div>
+              <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
+            <p>Placeholder review copy. Replace this entire section with the live review feed — do not publish sample testimonials as real ones.</p>
+            <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
+          </div>
+        </article>
+        <article class="rail__item">
+          <div class="rv">
+            <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Mumbai</span></div></div>
+              <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
+            <p>Placeholder review copy. The card design, the rail and the verified badge are what's being demonstrated here.</p>
+            <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
+          </div>
+        </article>
+        <article class="rail__item">
+          <div class="rv">
+            <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Delhi</span></div></div>
+              <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
+            <p>Placeholder review copy. The rail is grabbable and throwable — drag it, or flick it and watch where it lands.</p>
+            <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
+          </div>
+        </article>
+        <article class="rail__item">
+          <div class="rv">
+            <div class="rv__top"><div class="rv__who"><div class="rv__av">SR</div><div><b style="font-size:.9rem">Sample reviewer</b><br><span class="body-xs">Pune</span></div></div>
+              <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span></div>
+            <p>Placeholder review copy. A fourth card so the rail has somewhere to travel before the live feed lands.</p>
+            <span class="rv__ver"><svg><use href="#i-check"/></svg> Sample data</span>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -738,35 +850,35 @@
       <div class="acc" data-reveal >
         <details class="acc__item" open>
           <summary class="acc__q">Does it work with RO water? <i>+</i></summary>
-          <p class="acc__a">Yes — tap, RO, filtered or mineral. The SPE/PEM stack splits water at the membrane, so it doesn't need dissolved minerals to electrolyse. That's the main practical difference from plate-only alkaline bottles, which underperform on RO.</p>
+          <div class="acc__panel"><p class="acc__a">Yes — tap, RO, filtered or mineral. The SPE/PEM stack splits water at the membrane, so it doesn't need dissolved minerals to electrolyse. That's the main practical difference from plate-only alkaline bottles, which underperform on RO.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">How long does the hydrogen stay in the water? <i>+</i></summary>
-          <p class="acc__a">Drink within 15–20 minutes of the cycle finishing for peak concentration. Hydrogen is the smallest molecule there is and it leaves an open container steadily — keeping the lid on slows it down.</p>
+          <div class="acc__panel"><p class="acc__a">Drink within 15–20 minutes of the cycle finishing for peak concentration. Hydrogen is the smallest molecule there is and it leaves an open container steadily — keeping the lid on slows it down.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">What's the difference between the two cycles? <i>+</i></summary>
-          <p class="acc__a">Quick Boost runs 3 minutes and reaches about 3,000 PPB. Deep Infusion runs 18 minutes and reaches up to 9,000 PPB with ORP down to −450 mV. Tap the button for the first, hold it for the second.</p>
+          <div class="acc__panel"><p class="acc__a">Quick Boost runs 3 minutes and reaches about 3,000 PPB. Deep Infusion runs 18 minutes and reaches up to 9,000 PPB with ORP down to −450 mV. Tap the button for the first, hold it for the second.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">How many cycles per charge? <i>+</i></summary>
-          <p class="acc__a">15 or more, depending on which cycle you use. It charges over USB-C in roughly two hours from the same cable as most phones.</p>
+          <div class="acc__panel"><p class="acc__a">15 or more, depending on which cycle you use. It charges over USB-C in roughly two hours from the same cable as most phones.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">Is there any taste or smell? <i>+</i></summary>
-          <p class="acc__a">Molecular hydrogen is tasteless and odourless. Ozone and chlorine produced on the anode side are exhausted through a separate vent rather than dissolving back into the water.</p>
+          <div class="acc__panel"><p class="acc__a">Molecular hydrogen is tasteless and odourless. Ozone and chlorine produced on the anode side are exhausted through a separate vent rather than dissolving back into the water.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">How do I clean it? <i>+</i></summary>
-          <p class="acc__a">Rinse with plain water after use and let it air-dry with the lid off. Don't put it in a dishwasher and don't submerge the base — the electronics and the plate stack live there.</p>
+          <div class="acc__panel"><p class="acc__a">Rinse with plain water after use and let it air-dry with the lid off. Don't put it in a dishwasher and don't submerge the base — the electronics and the plate stack live there.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">What's covered by the warranty? <i>+</i></summary>
-          <p class="acc__a">365-day replacement on manufacturing defects, plus a 30-day return window if you simply don't get on with it. Shipping across India is free both ways.</p>
+          <div class="acc__panel"><p class="acc__a">365-day replacement on manufacturing defects, plus a 30-day return window if you simply don't get on with it. Shipping across India is free both ways.</p></div>
         </details>
         <details class="acc__item">
           <summary class="acc__q">Is hydrogen water safe? <i>+</i></summary>
-          <p class="acc__a">Molecular hydrogen is generally recognised as safe and the device is FDA, GMP, CE and ROHS certified. HydroMax is a wellness product, not a medical device — it isn't intended to diagnose, treat, cure or prevent any condition. If you have a health condition or are pregnant, check with your doctor first.</p>
+          <div class="acc__panel"><p class="acc__a">Molecular hydrogen is generally recognised as safe and the device is FDA, GMP, CE and ROHS certified. HydroMax is a wellness product, not a medical device — it isn't intended to diagnose, treat, cure or prevent any condition. If you have a health condition or are pregnant, check with your doctor first.</p></div>
         </details>
       </div>
     </div>
@@ -847,6 +959,8 @@
   </div>
 </div>
 
+<script src="motion.js"></script>
+<script src="water.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HydroMax landing page — two directions | Adivaa</title>
-<meta name="description" content="Two design directions for the HydroMax 300 ml landing page, for review.">
+<title>HydroMax landing page — three directions | Adivaa</title>
+<meta name="description" content="Three design directions for the HydroMax 300 ml landing page, for review.">
 <meta name="theme-color" content="#0E7897">
 <!-- a shared preview link, not a page that wants to be found -->
 <meta name="robots" content="noindex, nofollow">
@@ -29,7 +29,7 @@
   a { color: inherit; }
   :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-sm); }
 
-  .wrap { width: 100%; max-width: 1100px; margin-inline: auto; padding-inline: clamp(22px, 5vw, 48px); }
+  .wrap { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: clamp(22px, 5vw, 48px); }
 
   header { padding-block: clamp(48px, 8vw, 104px) clamp(32px, 5vw, 64px); text-align: center; }
   .eyebrow {
@@ -44,13 +44,14 @@
     text-wrap: balance;
   }
   .sub {
-    margin: var(--s-5) auto 0; max-width: 52ch;
+    margin: var(--s-5) auto 0; max-width: 54ch;
     font-size: var(--t-lead); line-height: var(--lh-lead); letter-spacing: var(--ls-lead);
     color: var(--ink-500); text-wrap: pretty;
   }
 
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); padding-bottom: clamp(48px, 7vw, 96px); }
-  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.2vw, 30px); padding-bottom: clamp(48px, 7vw, 96px); }
+  @media (max-width: 1040px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px)  { .grid { grid-template-columns: 1fr; } }
 
   .opt {
     display: flex; flex-direction: column;
@@ -73,17 +74,17 @@
     -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
     border-radius: var(--r-pill); padding: 7px 14px;
   }
-  .opt__body { padding: clamp(20px, 2.6vw, 32px); flex: 1; display: flex; flex-direction: column; }
+  .opt__body { padding: clamp(18px, 2.2vw, 28px); flex: 1; display: flex; flex-direction: column; }
   .opt__body h2 {
     margin: 0; font-family: var(--font-display); font-weight: 600;
-    font-size: clamp(1.375rem, 2.2vw, 1.75rem); letter-spacing: var(--ls-d3); line-height: var(--lh-d3);
+    font-size: clamp(1.25rem, 2vw, 1.625rem); letter-spacing: var(--ls-d3); line-height: var(--lh-d3);
   }
   .opt__body p { margin: var(--s-4) 0 0; font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--ink-500); }
   ul { margin: var(--s-5) 0 0; padding: 0; list-style: none; display: grid; gap: var(--s-3); }
   li { font-size: var(--t-sm); color: var(--ink-500); display: flex; gap: var(--s-3); align-items: flex-start; }
   li::before { content: ''; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-400); margin-top: .55em; }
   .opt__go {
-    margin-top: var(--s-6); font-weight: 700; color: var(--blue-600);
+    margin-top: auto; padding-top: var(--s-6); font-weight: 700; color: var(--blue-600);
     display: inline-flex; align-items: center; gap: var(--s-2);
   }
   .opt:hover .opt__go span { transform: translateX(4px); }
@@ -103,10 +104,10 @@
 
 <header class="wrap">
   <p class="eyebrow">Adivaa · HydroMax 300 ml</p>
-  <h1>Two directions for the landing page.</h1>
+  <h1>Three directions for the landing page.</h1>
   <p class="sub">
-    Same product, same claims, same content — two different ways of presenting it.
-    Open each on a phone as well as a laptop, then tell us which one feels closer to right.
+    Same product, same claims, same content — three different ways of presenting it.
+    Open each on a phone as well as a laptop, then tell us which one feels closest to right.
   </p>
 </header>
 
@@ -114,14 +115,14 @@
   <a class="opt" href="classic/">
     <div class="opt__shot">
       <span class="opt__tag">Direction A</span>
-      <img src="preview-classic.jpg" alt="Direction A: the current landing page, showing the product beside the full buy block" width="1440" height="960">
+      <img src="preview-classic.jpg" alt="Direction A: the product beside a full buy block on a light page" width="1440" height="960">
     </div>
     <div class="opt__body">
       <h2>Direction A</h2>
-      <p>A dense, information-forward page. Everything you need to decide is on screen early, and the buying controls sit beside the product from the first scroll.</p>
+      <p>Dense and information-forward. Everything you need to decide is on screen early, and the buying controls sit beside the product from the first scroll.</p>
       <ul>
         <li>Hero pairs the product with the full buy block</li>
-        <li>Sections are close-packed and detail-rich</li>
+        <li>Close-packed, detail-rich sections</li>
         <li>Grids and columns throughout</li>
       </ul>
       <span class="opt__go">Open Direction A <span aria-hidden="true">→</span></span>
@@ -135,13 +136,30 @@
     </div>
     <div class="opt__body">
       <h2>Direction B</h2>
-      <p>A calmer, more spacious page. One idea per screen, larger type and imagery, and a dedicated step for configuring the order with a running total.</p>
+      <p>Calm and spacious. One idea per screen, larger type and imagery, and a dedicated step for configuring the order with a running total.</p>
       <ul>
-        <li>Hero states the product; buying moves to its own step</li>
+        <li>Hero states the product; buying gets its own step</li>
         <li>Far more whitespace, bigger typography</li>
-        <li>Galleries you can drag; panels that respond as you touch them</li>
+        <li>Galleries you can drag and throw</li>
       </ul>
       <span class="opt__go">Open Direction B <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+
+  <a class="opt" href="meniscus/">
+    <div class="opt__shot">
+      <span class="opt__tag">Direction D</span>
+      <img src="preview-meniscus.jpg" alt="Direction D: a dark page with the product standing in lit water" width="1440" height="960">
+    </div>
+    <div class="opt__body">
+      <h2>Direction D</h2>
+      <p>Dark and material. Light collects on the edge of every surface the way it does where water meets glass, and the product stands in a lit pool rather than on a card.</p>
+      <ul>
+        <li>Dark throughout — the only one of the three</li>
+        <li>Surfaces bend what is behind them, not blur it</li>
+        <li>Live water behind the product</li>
+      </ul>
+      <span class="opt__go">Open Direction D <span aria-hidden="true">→</span></span>
     </div>
   </a>
 </main>
@@ -149,7 +167,7 @@
 <footer class="wrap">
   <p class="note">
     <b>Work in progress — not for publication.</b>
-    Customer reviews on both pages are placeholder sample data and are labelled as such.
+    Customer reviews on all three pages are placeholder sample data and are labelled as such.
     Pricing, the discount badge and the review count are still being finalised and should not
     be read as final. Cart and checkout are not connected yet.
   </p>
