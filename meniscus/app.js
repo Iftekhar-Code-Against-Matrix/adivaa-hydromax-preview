@@ -336,39 +336,9 @@ if (window.LQ) {
      light band there is nothing for them to be cast on. */
   document.querySelectorAll('.section--deep').forEach(sec => LQ.mountCaustics(sec));
 
-  /* Rule 5: the product stands in water. */
-  const cv = document.querySelector('[data-water]');
-  const plate = cv && cv.closest('.hero__plate');
-  const img = plate && plate.querySelector('img');
-  if (cv && img && !reduced) {
-    const boot = () => {
-      const water = new LQ.WaterSurface(cv, img, { waterline: 0.60, tint: 1 });
-      if (water.dead) return;
-      water.autoRun();
-      plate.classList.add('is-live');
-
-      /* Touching the water disturbs it — 1:1 with the pointer, the whole
-         way across, not a canned splash on click. */
-      cv.addEventListener('pointermove', (e) => {
-        water.dropAtClient(e.clientX, e.clientY, 6, 150);
-      }, { passive: true });
-      cv.addEventListener('pointerdown', (e) => {
-        water.dropAtClient(e.clientX, e.clientY, 11, 620);
-      }, { passive: true });
-
-      /* Scrolling raises the waterline: the descent through the page and
-         the descent through the water are the same gesture. Clamped well
-         short of the top so the product never fully submerges. */
-      if (window.AM) {
-        AM.scrollLink(plate, (p) => {
-          water.waterline = 0.60 - p * 0.22;
-          plate.style.setProperty('--hp', p.toFixed(4));
-        });
-      }
-    };
-    if (img.complete && img.naturalWidth) boot();
-    else img.addEventListener('load', boot, { once: true });
-  }
+  /* The hero water surface was removed at the client's request.
+     liquid.js still powers the press ripples and the caustics on dark
+     bands; only the product-in-water simulation is gone. */
 }
 
 /* ---------- scroll-linked chrome ---------- */
